@@ -1,0 +1,4 @@
+include ':paymob_flutter_lib'
+include ':acceptsdk'
+project(':paymob_flutter_lib').projectDir = file('android')
+project(':acceptsdk').projectDir = file('android/acceptsdk')
