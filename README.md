@@ -2,8 +2,6 @@
 
 This plugin is for [paymob.pk](https://docs.paymob.pk/). It's implementation of the native Paymob SDK of Android and IOS to work on Flutter environment.
 
-> iOS is currently under development.
-
 ## Usage
 
 Add this to your package's `pubspec.yaml` file:
