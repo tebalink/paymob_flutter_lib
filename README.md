@@ -10,7 +10,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  paymob_flutter_lib: ^0.0.1
+  paymob_flutter_lib: ^1.0.0
 ```
 
 ## Android
