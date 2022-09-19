@@ -23,7 +23,7 @@ class MethodChannelPaymobFlutterLib extends PaymobFlutterLibPlatform {
     String strPayment = paymentToJson(payment);
     final result = await methodChannel.invokeMethod<String>(
         'StartPayActivityNoToken', {"payment": strPayment});
-    print(result);
+    // print(result);
     return paymentResultFromJson(result!);
   }
 

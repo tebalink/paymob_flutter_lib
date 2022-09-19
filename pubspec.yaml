@@ -1,6 +1,6 @@
 name: paymob_flutter_lib
 description: Flutter plugin to integrate Paymob to flutter applications.
-version: 1.0.0
+version: 1.0.1
 homepage: https://github.com/bilalilyas90/paymob_flutter_lib
 
 environment:

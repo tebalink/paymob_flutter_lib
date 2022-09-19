@@ -22,14 +22,15 @@ class PaymobFlutterLib {
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: jsonEncode(<String, String>{"api_key": apiKey}));
-      String token = jsonDecode(response.body)['token'];
+      String? token = jsonDecode(response.body)['token'];
+
       if (token != null) {
         return token;
       } else {
         throw jsonDecode(response.body);
       }
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -42,14 +43,14 @@ class PaymobFlutterLib {
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: orderToJson(order));
-      int id = jsonDecode(response.body)['id'];
+      int? id = jsonDecode(response.body)['id'];
       if (id != null) {
         return id;
       } else {
         throw jsonDecode(response.body);
       }
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 
@@ -63,14 +64,14 @@ class PaymobFlutterLib {
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: paymentKeyRequestToJson(paymentKeyRequest));
-      String token = jsonDecode(response.body)['token'];
+      String? token = jsonDecode(response.body)['token'];
       if (token != null) {
         return token;
       } else {
         throw jsonDecode(response.body);
       }
     } catch (e) {
-      throw e;
+      rethrow;
     }
   }
 

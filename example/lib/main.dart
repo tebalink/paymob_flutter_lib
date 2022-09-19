@@ -248,7 +248,7 @@ class _MyAppState extends State<MyApp> {
               const Divider(),
               MaterialButton(
                 onPressed: () async {
-                  print(_paymentKey);
+                  // print(_paymentKey);
                   await startPayActivityNoToken();
                 },
                 child: const Text('startPayActivityNoToken'),
