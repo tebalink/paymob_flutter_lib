@@ -8,7 +8,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  paymob_flutter_lib: ^1.0.0
+  paymob_flutter_lib: ^1.0.2
 ```
 
 ## Android
@@ -23,4 +23,19 @@ You have to edit `AndroidManifest.xml` file with following.
         tools:replace="android:label,android:supportsRtl">
     </appliaction>
 </manifest>
+```
+
+Add following statement to `android/settings.gradle` file of your project.
+
+```gradle
+apply from: "$flutterSdkPath/.pub-cache/hosted/pub.dartlang.org/paymob_flutter_lib-1.0.1/settings.gradle"
+```
+
+## ios
+
+Add this to your `Podfile` file
+
+```podfile
+# Uncomment this line to define a global platform for your project
+platform :ios, '12.0'
 ```
