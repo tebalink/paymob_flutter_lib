@@ -8,7 +8,7 @@ Add this to your package's `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  paymob_flutter_lib: ^1.0.3
+  paymob_flutter_lib: ^1.0.4
 ```
 
 ## Android
@@ -28,7 +28,7 @@ You have to edit `AndroidManifest.xml` file with following.
 Add following statement to `android/settings.gradle` file of your project.
 
 ```gradle
-apply from: "$flutterSdkPath/.pub-cache/hosted/pub.dartlang.org/paymob_flutter_lib-1.0.3/settings.gradle"
+apply from: "$flutterSdkPath/.pub-cache/hosted/pub.dartlang.org/paymob_flutter_lib-1.0.4/settings.gradle"
 ```
 
 ## ios

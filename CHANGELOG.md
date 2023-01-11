@@ -15,3 +15,8 @@
 
 * Bugs solved.
 * Updated Readme.md file.
+
+## 1.0.4
+
+* Bugs solved.
+* Updated Readme.md file.
