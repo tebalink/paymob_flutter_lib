@@ -20,3 +20,8 @@
 
 * Bugs solved.
 * Updated Readme.md file.
+
+## 1.0.5
+
+* Bugs solved for IOS.
+* Updated Readme.md file.

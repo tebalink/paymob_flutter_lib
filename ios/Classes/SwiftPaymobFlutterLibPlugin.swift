@@ -112,7 +112,7 @@ public class SwiftPaymobFlutterLibPlugin: NSObject, FlutterPlugin,AcceptSDKDeleg
                         return w.isHidden == false
              }).first?.rootViewController
 
-            try accept.presentPayVC(vC: rootViewController, paymentKey: payment.paymentKey ?? "", country: "pk", saveCardDefault: payment.saveCardDefault ?? false, showSaveCard: payment.showSaveCard ?? false, showAlerts: true, isEnglish: true)
+            try accept.presentPayVC(vC: rootViewController, paymentKey: payment.paymentKey ?? "", country: .Pakistan, saveCardDefault: payment.saveCardDefault ?? false, showSaveCard: payment.showSaveCard ?? false, showAlerts: true, language: .English)
         } catch AcceptSDKError.MissingArgumentError(let errorMessage) {
             print(errorMessage)
         }  catch let error {
