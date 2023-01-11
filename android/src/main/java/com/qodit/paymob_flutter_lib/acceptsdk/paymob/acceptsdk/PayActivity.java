@@ -341,9 +341,9 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 			Log.d("notice paymentInquiry", this.payDict.toString());
 			String success = this.payDict.getString("success");
 			String txn_response_code = this.payDict.getString("txn_response_code");
-			Log.d("noticeeeeeeeee paymentInquiry", "txn_response_code is " + txn_response_code);
+			Log.d("NOTICEEEEE paymentInquiry", "txn_response_code is " + txn_response_code);
 			if(!android.text.TextUtils.isDigitsOnly(txn_response_code)){
-				Log.d("noticeeeeeeeee paymentInquiry", "txn_response_code is String");
+				Log.d("NOTICEEEEE paymentInquiry", "txn_response_code is String");
 				if (txn_response_code.equals("ERROR")){
 					String errorMsg = this.payDict.getString("data.message");
 					notifyErrorTransaction("ERROR: "+errorMsg);
@@ -351,7 +351,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 					notifyErrorTransaction("An error occured while processing the transaction");
 				}
 			}else{
-				Log.d("noticeeeeeeeee paymentInquiry", "txn_response_code is Int");
+				Log.d("NOTICEEEEE paymentInquiry", "txn_response_code is Int");
 				if (this.payDict.getInt("txn_response_code") == 1)
 					notifyErrorTransaction("There was an error processing the transaction");
 				if (this.payDict.getInt("txn_response_code") == 2)
