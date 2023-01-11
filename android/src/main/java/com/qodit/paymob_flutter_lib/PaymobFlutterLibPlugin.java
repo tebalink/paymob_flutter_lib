@@ -8,16 +8,25 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.paymob.acceptsdk.IntentConstants;
-import com.paymob.acceptsdk.PayActivity;
-import com.paymob.acceptsdk.PayActivityIntentKeys;
-import com.paymob.acceptsdk.PayResponseKeys;
-import com.paymob.acceptsdk.SaveCardResponseKeys;
+//import com.paymob.acceptsdk.IntentConstants;
+//import com.paymob.acceptsdk.PayActivity;
+//import com.paymob.acceptsdk.PayActivityIntentKeys;
+//import com.paymob.acceptsdk.PayResponseKeys;
+//import com.paymob.acceptsdk.SaveCardResponseKeys;
 // import com.paymob.acceptsdk.ThreeDSecureWebViewActivty;
-import com.softworx.paymob_plugin.models.payment.Converter;
-import com.softworx.paymob_plugin.models.payment.Payment;
-import com.softworx.paymob_plugin.models.result.PaymentResult;
-import com.softworx.paymob_plugin.models.result.ResultConverter;
+import com.qodit.paymob_flutter_lib.acceptsdk.paymob.acceptsdk.IntentConstants;
+import com.qodit.paymob_flutter_lib.acceptsdk.paymob.acceptsdk.PayActivity;
+import com.qodit.paymob_flutter_lib.acceptsdk.paymob.acceptsdk.PayActivityIntentKeys;
+import com.qodit.paymob_flutter_lib.acceptsdk.paymob.acceptsdk.PayResponseKeys;
+import com.qodit.paymob_flutter_lib.acceptsdk.paymob.acceptsdk.SaveCardResponseKeys;
+import com.qodit.paymob_flutter_lib.models.payment.Converter;
+import com.qodit.paymob_flutter_lib.models.payment.Payment;
+import com.qodit.paymob_flutter_lib.models.result.PaymentResult;
+import com.qodit.paymob_flutter_lib.models.result.ResultConverter;
+//import com.softworx.paymob_plugin.models.payment.Converter;
+//import com.softworx.paymob_plugin.models.payment.Payment;
+//import com.softworx.paymob_plugin.models.result.PaymentResult;
+//import com.softworx.paymob_plugin.models.result.ResultConverter;
 
 import java.io.IOException;
 import java.util.Map;
@@ -212,7 +221,7 @@ public class PaymobFlutterLibPlugin implements FlutterPlugin, MethodCallHandler,
 
         // Note that a payment process was attempted. You can extract the original returned values
         // Use the static keys declared in PayResponseKeys to extract the fields you want
-               finishWithError("USER_CANCELED_3D_SECURE_VERIFICATION", "User canceled 3-d scure verification!!", extras.getString(PayResponseKeys.PENDING));
+        finishWithError("USER_CANCELED_3D_SECURE_VERIFICATION", "User canceled 3-d scure verification!!", extras.getString(PayResponseKeys.PENDING));
       } else if (resultCode == IntentConstants.USER_CANCELED_3D_SECURE_VERIFICATION_PARSING_ISSUE) {
 
         // Note that a payment process was attempted.

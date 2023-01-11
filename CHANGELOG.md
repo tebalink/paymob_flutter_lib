@@ -10,3 +10,8 @@
 
 * Bugs solved.
 * Updated Readme.md file.
+
+## 1.0.3
+
+* Bugs solved.
+* Updated Readme.md file.

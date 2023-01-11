@@ -12,7 +12,7 @@
 //
 //     Payment data = Converter.fromJsonString(jsonString);
 
-package com.softworx.paymob_plugin.models.payment;
+package com.qodit.paymob_flutter_lib.models.payment;
 
 import android.os.Build;
 

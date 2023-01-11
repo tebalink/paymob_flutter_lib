@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:paymob_flutter_lib/models/order.dart';
 import 'package:paymob_flutter_lib/models/payment.dart';
 import 'package:paymob_flutter_lib/models/payment_key_request.dart';
@@ -56,14 +57,14 @@ class _MyAppState extends State<MyApp> {
           deliveryNeeded: "false",
           amountCents: "35000",
           currency: "PKR",
-          merchantOrderId: 1146,
+          // merchantOrderId: 2194,
           items: [
-            Item(
-              name: "ASC1515",
-              amountCents: "35000",
-              description: "Smart Watch",
-              quantity: "1",
-            ),
+            // Item(
+            //   name: "ASC1515",
+            //   amountCents: "35000",
+            //   description: "Smart Watch",
+            //   quantity: "1",
+            // ),
             // Item(
             //     name: "ERT6565",
             //     amountCents: "1000",
@@ -118,18 +119,19 @@ class _MyAppState extends State<MyApp> {
           expiration: 3600,
           orderId: _orderId.toString(),
           billingData: BillingData(
-              apartment: "803",
-              email: "claudette09@exa.com",
-              floor: "42",
-              firstName: "Clifford",
-              street: "Ethan Land",
-              building: "8028",
-              phoneNumber: "+86(8)9135210487",
-              postalCode: "01898",
-              city: "Jaskolskiburgh",
-              country: "CR",
-              lastName: "Nicolas",
-              state: "Utah"),
+            firstName: "Clifford",
+            lastName: "Nicolas",
+            email: "claudette09@exa.com",
+            phoneNumber: "+86(8)9135210487",
+            apartment: "NA",
+            floor: "NA",
+            street: "NA",
+            building: "NA",
+            postalCode: "NA",
+            city: "Sargodha",
+            state: "Punjab",
+            country: "PK",
+          ),
           currency: "PKR",
           integrationId: 12740,
           lockOrderWhenPaid: "false",
@@ -166,6 +168,13 @@ class _MyAppState extends State<MyApp> {
         _result = result?.dataMessage;
         _token = result?.token;
         _maskedPan = result?.maskedPan;
+      });
+    } on PlatformException catch (err) {
+      // Handle err
+      print("PlatformException 1");
+      print(err);
+      setState(() {
+        _error = '${err.message}';
       });
     } catch (e) {
       if (!mounted) return;
@@ -206,6 +215,8 @@ class _MyAppState extends State<MyApp> {
         _result = result;
       });
     } catch (e) {
+      print("erorrrrrr 2");
+      print(e);
       if (!mounted) return;
       setState(() {
         _error = '$e';

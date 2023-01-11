@@ -28,7 +28,7 @@ class Order {
         "delivery_needed": deliveryNeeded ?? deliveryNeeded,
         "amount_cents": amountCents ?? amountCents,
         "currency": currency ?? currency,
-        "merchant_order_id": merchantOrderId ?? merchantOrderId,
+        // "merchant_order_id": merchantOrderId ?? merchantOrderId,
         "items": items == null
             ? null
             : List<dynamic>.from(items!.map((x) => x.toJson())),

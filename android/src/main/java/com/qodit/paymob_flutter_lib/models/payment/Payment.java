@@ -1,9 +1,8 @@
-package com.softworx.paymob_plugin.models.payment;
+package com.qodit.paymob_flutter_lib.models.payment;
 
 import android.graphics.Color;
 
 import com.fasterxml.jackson.annotation.*;
-import com.softworx.paymob_plugin.models.payment.Customer;
 
 public class Payment {
     private String paymentKey;

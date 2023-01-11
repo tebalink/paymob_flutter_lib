@@ -1,4 +1,4 @@
-package com.softworx.paymob_plugin.models.payment;
+package com.qodit.paymob_flutter_lib.models.payment;
 
 import com.fasterxml.jackson.annotation.*;
 
