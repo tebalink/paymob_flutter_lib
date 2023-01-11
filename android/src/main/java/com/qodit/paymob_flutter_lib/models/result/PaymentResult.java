@@ -6,6 +6,7 @@ public class PaymentResult {
     private String dataMessage;
     private String token;
     private String maskedPan;
+    private String id;
 
     @JsonProperty("data_message")
     public String getDataMessage() { return dataMessage; }
@@ -21,4 +22,9 @@ public class PaymentResult {
     public String getMaskedPan() { return maskedPan; }
     @JsonProperty("masked_pan")
     public void setMaskedPan(String value) { this.maskedPan = value; }
+
+    @JsonProperty("id")
+    public String getID() { return id; }
+    @JsonProperty("id")
+    public void setID(String value) { this.id = value; }
 }

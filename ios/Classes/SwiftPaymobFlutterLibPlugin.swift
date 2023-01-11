@@ -9,15 +9,17 @@ public class SwiftPaymobFlutterLibPlugin: NSObject, FlutterPlugin,AcceptSDKDeleg
         super.init()
         accept.delegate = self
     }
-    struct PaymentResult: Codable{
+    struct PaymentResult: Codable{ 
         let dataMessage: String?
         let token: String?
         let maskedPan: String?
+        let id: String?
         
         enum CodingKeys: String, CodingKey {
             case dataMessage = "data_message"
             case token = "token"
             case maskedPan = "masked_pan"
+            case id = "id"
         }
     }
     struct Payment: Codable{
@@ -134,13 +136,13 @@ public class SwiftPaymobFlutterLibPlugin: NSObject, FlutterPlugin,AcceptSDKDeleg
     }
     
     public func transactionAccepted(_ payData: PayResponse) {
-        let paymentResult = try! JSONEncoder().encode(PaymentResult(dataMessage: payData.dataMessage,token: "", maskedPan: ""))
+        let paymentResult = try! JSONEncoder().encode(PaymentResult(dataMessage: payData.dataMessage,token: "", maskedPan: "",id : String(payData.id)))
         let jsonString = String(data: paymentResult, encoding: .utf8) ?? ""
         finishWithSuccess(msg: jsonString)
     }
     
     public func transactionAccepted(_ payData: PayResponse, savedCardData: SaveCardResponse) {
-        let paymentResult = try! JSONEncoder().encode(PaymentResult(dataMessage: payData.dataMessage,token: savedCardData.token, maskedPan: savedCardData.masked_pan))
+        let paymentResult = try! JSONEncoder().encode(PaymentResult(dataMessage: payData.dataMessage,token: savedCardData.token, maskedPan: savedCardData.masked_pan,id : String(payData.id)))
         let jsonString = String(data: paymentResult, encoding: .utf8) ?? ""
         finishWithSuccess(msg: jsonString)
     }

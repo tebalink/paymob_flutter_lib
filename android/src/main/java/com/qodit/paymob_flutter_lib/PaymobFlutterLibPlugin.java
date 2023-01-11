@@ -195,7 +195,21 @@ public class PaymobFlutterLibPlugin implements FlutterPlugin, MethodCallHandler,
         // User finished their payment successfullyTRANSACTION_SUCCESSFUL
 
         // Use the static keys declared in PayResponseKeys to extract the fields you want
-          finishWithSuccess(extras.getString(PayResponseKeys.DATA_MESSAGE));
+          // finishWithSuccess(extras.getString(PayResponseKeys.DATA_MESSAGE));
+          PaymentResult paymentResult= new PaymentResult(); 
+          paymentResult.setToken("");
+          paymentResult.setMaskedPan("");
+          paymentResult.setID(extras.getString(PayResponseKeys.ID));
+          paymentResult.setDataMessage(extras.getString(PayResponseKeys.DATA_MESSAGE));
+          // Use the static keys declared in PayResponseKeys to extract the fields you want
+
+          // Use the static keys declared in PayResponseKeys to extract the fields you want
+          // Use the static keys declared in SaveCardResponseKeys to extract the fields you want
+          try {
+            finishWithSuccess(ResultConverter.toJsonString(paymentResult));
+          } catch (JsonProcessingException e) {
+            e.printStackTrace();
+          }
 
       } else if (resultCode == IntentConstants.TRANSACTION_SUCCESSFUL_PARSING_ISSUE) {
         // User finished their payment successfully. An error occured while reading the returned JSON.
@@ -204,9 +218,10 @@ public class PaymobFlutterLibPlugin implements FlutterPlugin, MethodCallHandler,
         // User finished their payment successfully and card was TRANSACTION_SUCCESSFUL_CARD_SAVEDsaved.
         // ToastMaker.displayLongToast(this, "data " + extras.getString(PayResponseKeys.DATA_MESSAGE));
         // Log.d("token", "onActivityResult: "+extras.get(SaveCardResponseKeys.TOKEN));
-        PaymentResult paymentResult= new PaymentResult();
+        PaymentResult paymentResult= new PaymentResult(); 
         paymentResult.setToken(extras.getString(SaveCardResponseKeys.TOKEN));
         paymentResult.setMaskedPan(extras.getString(SaveCardResponseKeys.MASKED_PAN));
+        paymentResult.setID(extras.getString(SaveCardResponseKeys.ID));
         // Use the static keys declared in PayResponseKeys to extract the fields you want
 
         // Use the static keys declared in PayResponseKeys to extract the fields you want

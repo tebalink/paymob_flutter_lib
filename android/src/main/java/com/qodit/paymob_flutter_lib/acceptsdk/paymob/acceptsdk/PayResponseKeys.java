@@ -17,7 +17,7 @@ public class PayResponseKeys {
 
     public static final String IS_3D_SECURE = "is_3d_secure";
 
-    public static final String ID = "od";
+    public static final String ID = "id";
 
     public static final String IS_VOID = "is_void";
 

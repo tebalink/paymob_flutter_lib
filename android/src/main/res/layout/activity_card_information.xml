@@ -273,7 +273,21 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="end"
+            android:text="Powered by"
+            android:textColor="@color/colorText"
+            android:textSize="@dimen/normal_text_size" />
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/small_padding_value"
+            android:layout_marginLeft="@dimen/small_padding_value"
+            android:src="@drawable/pm_logo_2" />
 
     </LinearLayout>
 
