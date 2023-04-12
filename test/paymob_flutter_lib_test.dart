@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:paymob_flutter_lib/helper.dart';
 import 'package:paymob_flutter_lib/models/payment_result.dart';
 import 'package:paymob_flutter_lib/models/payment.dart';
 import 'package:paymob_flutter_lib/paymob_flutter_lib.dart';
@@ -13,13 +14,13 @@ class MockPaymobFlutterLibPlatform
   Future<String?> getPlatformVersion() => Future.value('42');
 
   @override
-  Future<PaymentResult?> startPayActivityNoToken(Payment payment) {
+  Future<PaymentResult?> startPayActivityNoToken(Payment payment, CountrySubDomain country) {
     // TODO: implement startPayActivityNoToken
     throw UnimplementedError();
   }
 
   @override
-  Future<String?> startPayActivityToken(Payment payment) {
+  Future<String?> startPayActivityToken(Payment payment, CountrySubDomain country) {
     // TODO: implement startPayActivityToken
     throw UnimplementedError();
   }

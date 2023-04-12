@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -53,6 +54,7 @@ public class PaymobFlutterLibPlugin implements FlutterPlugin, MethodCallHandler,
   private static Context context;
   private static Result pendingResult;
   private static Payment payment;
+  private static String countrySubDomain;
 
   public void StartPayActivityNoToken() {
     Intent pay_intent = new Intent(context, PayActivity.class);
@@ -60,6 +62,9 @@ public class PaymobFlutterLibPlugin implements FlutterPlugin, MethodCallHandler,
 
     // this key is used to save the card by deafult.
     pay_intent.putExtra(PayActivityIntentKeys.SAVE_CARD_DEFAULT, payment.getSaveCardDefault());
+
+   // this key is used to save the card by deafult.
+    pay_intent.putExtra(PayActivityIntentKeys.COUNTRY_SUBDOMAIN,countrySubDomain);
 
     // this key is used to display the savecard checkbox.
     pay_intent.putExtra(PayActivityIntentKeys.SHOW_SAVE_CARD, payment.getShowSaveCard());
@@ -87,6 +92,9 @@ public class PaymobFlutterLibPlugin implements FlutterPlugin, MethodCallHandler,
     pay_intent.putExtra("language", payment.getLanguage());
     pay_intent.putExtra(PayActivityIntentKeys.TOKEN, payment.getToken());
     // card masked Pan in case of saved card.
+
+    // this key is used to save the card by deafult.
+    pay_intent.putExtra(PayActivityIntentKeys.COUNTRY_SUBDOMAIN,countrySubDomain);
 
     pay_intent.putExtra(PayActivityIntentKeys.MASKED_PAN_NUMBER, payment.getMaskedPanNumber());
 
@@ -137,7 +145,15 @@ public class PaymobFlutterLibPlugin implements FlutterPlugin, MethodCallHandler,
       try {
         pendingResult = result;
         final Map<String,Object> arg = call.arguments();
+
+        countrySubDomain =  String.valueOf(arg.get("countrySubDomain"));
+
+        Log.i("countrySubDomain", String.valueOf(arg.get("countrySubDomain")));
+        Log.i("countrySubDomain", countrySubDomain);
+
+
         payment = Converter.fromJsonString((String)arg.get("payment"));
+
         StartPayActivityNoToken();
       } catch (IOException e) {
         pendingResult.error("error", e.getMessage(), null);
@@ -147,7 +163,13 @@ public class PaymobFlutterLibPlugin implements FlutterPlugin, MethodCallHandler,
         pendingResult = result;
         final Map<String,Object> arg = call.arguments();
         payment = Converter.fromJsonString((String)arg.get("payment"));
+
+        countrySubDomain =  String.valueOf(arg.get("countrySubDomain"));
+        Log.i("countrySubDomain", String.valueOf(arg.get("countrySubDomain")));
+        Log.i("countrySubDomain", countrySubDomain);
+
         StartPayActivityToken();
+
       } catch (IOException e) {
         pendingResult.error("error", e.getMessage(), null);
       }
@@ -177,21 +199,26 @@ public class PaymobFlutterLibPlugin implements FlutterPlugin, MethodCallHandler,
       if (resultCode == IntentConstants.USER_CANCELED) {
         // User canceled and did no payment request was fired
         finishWithError("USER_CANCELED", "User canceled!!!", null);
-      } else if (resultCode == IntentConstants.MISSING_ARGUMENT) {
+      }
+      else if (resultCode == IntentConstants.MISSING_ARGUMENT) {
         // You forgot to pass an important key-value pair in the intent's extras
         finishWithError("MISSING_ARGUMENT", "Missing Argument == " + extras.getString(IntentConstants.MISSING_ARGUMENT_VALUE), null);
-      } else if (resultCode == IntentConstants.TRANSACTION_ERROR) {
+      }
+      else if (resultCode == IntentConstants.TRANSACTION_ERROR) {
         // An error occurred while handling an API's response
         finishWithError("TRANSACTION_ERROR", "Reason == " + extras.getString(IntentConstants.TRANSACTION_ERROR_REASON), null);
-      } else if (resultCode == IntentConstants.TRANSACTION_REJECTED) {
+      }
+      else if (resultCode == IntentConstants.TRANSACTION_REJECTED) {
         // User attempted to pay but their transaction was rejected
 
         // Use the static keys declared in PayResponseKeys to extract the fields you want
         finishWithError("TRANSACTION_REJECTED", extras.getString(PayResponseKeys.DATA_MESSAGE), null);
-      } else if (resultCode == IntentConstants.TRANSACTION_REJECTED_PARSING_ISSUE) {
+      }
+      else if (resultCode == IntentConstants.TRANSACTION_REJECTED_PARSING_ISSUE) {
         // User attempted to pay but their transaction was rejected. An error occured while reading the returned JSON
         finishWithError("TRANSACTION_REJECTED_PARSING_ISSUE",extras.getString(IntentConstants.RAW_PAY_RESPONSE), null );
-      } else if (resultCode == IntentConstants.TRANSACTION_SUCCESSFUL) {
+      }
+      else if (resultCode == IntentConstants.TRANSACTION_SUCCESSFUL) {
         // User finished their payment successfullyTRANSACTION_SUCCESSFUL
 
         // Use the static keys declared in PayResponseKeys to extract the fields you want
@@ -211,10 +238,12 @@ public class PaymobFlutterLibPlugin implements FlutterPlugin, MethodCallHandler,
             e.printStackTrace();
           }
 
-      } else if (resultCode == IntentConstants.TRANSACTION_SUCCESSFUL_PARSING_ISSUE) {
+      }
+      else if (resultCode == IntentConstants.TRANSACTION_SUCCESSFUL_PARSING_ISSUE) {
         // User finished their payment successfully. An error occured while reading the returned JSON.
         finishWithError("TRANSACTION_SUCCESSFUL_PARSING_ISSUE", "TRANSACTION_SUCCESSFUL - Parsing Issue", null);
-      } else if (resultCode == IntentConstants.TRANSACTION_SUCCESSFUL_CARD_SAVED) {
+      }
+      else if (resultCode == IntentConstants.TRANSACTION_SUCCESSFUL_CARD_SAVED) {
         // User finished their payment successfully and card was TRANSACTION_SUCCESSFUL_CARD_SAVEDsaved.
         // ToastMaker.displayLongToast(this, "data " + extras.getString(PayResponseKeys.DATA_MESSAGE));
         // Log.d("token", "onActivityResult: "+extras.get(SaveCardResponseKeys.TOKEN));
@@ -237,7 +266,8 @@ public class PaymobFlutterLibPlugin implements FlutterPlugin, MethodCallHandler,
         // Note that a payment process was attempted. You can extract the original returned values
         // Use the static keys declared in PayResponseKeys to extract the fields you want
         finishWithError("USER_CANCELED_3D_SECURE_VERIFICATION", "User canceled 3-d scure verification!!", extras.getString(PayResponseKeys.PENDING));
-      } else if (resultCode == IntentConstants.USER_CANCELED_3D_SECURE_VERIFICATION_PARSING_ISSUE) {
+      }
+      else if (resultCode == IntentConstants.USER_CANCELED_3D_SECURE_VERIFICATION_PARSING_ISSUE) {
 
         // Note that a payment process was attempted.
         // User finished their payment successfully. An error occured while reading the returned JSON.

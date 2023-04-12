@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:paymob_flutter_lib/helper.dart';
 import 'package:paymob_flutter_lib/models/order.dart';
 import 'package:paymob_flutter_lib/models/payment.dart';
 import 'package:paymob_flutter_lib/models/payment_key_request.dart';
@@ -21,8 +22,10 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final _paymobFlutterLibPlugin = PaymobFlutterLib();
+
   // String apiKey = 'your_api_key';
-  String apiKey =    'ZXlKMGVYQWlPaUpLVjFRaUxDSmhiR2NpT2lKSVV6VXhNaUo5LmV5SmpiR0Z6Y3lJNklrMWxjbU5vWVc1MElpd2ljSEp2Wm1sc1pWOXdheUk2TWpBd09EQXNJbTVoYldVaU9pSXhOakEzTkRRMU5qSTJMakkwTURjMU9DSjkuWFlReXd3TFhJNGtXOUJ6SEwtRlIyQTJ1QTR6aG1abTVEWklaZGowZFpLV2V0Vjk0bFU1MXQ0LUJEc1c0MlVBTDh2U08yd1F4NTdxMmVLUU1obFhvNWc=';
+  String apiKey =
+      'ZXlKMGVYQWlPaUpLVjFRaUxDSmhiR2NpT2lKSVV6VXhNaUo5LmV5SmpiR0Z6Y3lJNklrMWxjbU5vWVc1MElpd2ljSEp2Wm1sc1pWOXdheUk2TWpBd09EQXNJbTVoYldVaU9pSXhOakEzTkRRMU5qSTJMakkwTURjMU9DSjkuWFlReXd3TFhJNGtXOUJ6SEwtRlIyQTJ1QTR6aG1abTVEWklaZGowZFpLV2V0Vjk0bFU1MXQ0LUJEc1c0MlVBTDh2U08yd1F4NTdxMmVLUU1obFhvNWc=';
 
   String _auth = '';
   int _orderId = 0;
@@ -35,8 +38,8 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> authenticateRequest() async {
     try {
-
-      String result = await PaymobFlutterLib.authenticateRequest(apiKey);
+      String result = await PaymobFlutterLib.authenticateRequest(apiKey,
+          countrySubDomain: CountrySubDomain.egypt);
       if (!mounted) return;
 
       setState(() {
@@ -49,7 +52,6 @@ class _MyAppState extends State<MyApp> {
       setState(() {
         _error = '$e';
         print(e);
-
       });
     }
   }
@@ -100,6 +102,7 @@ class _MyAppState extends State<MyApp> {
           //     height: 1,
           //     contents: "product of some sorts"),
         ),
+        countrySubDomain: CountrySubDomain.egypt,
       );
       if (!mounted) return;
 
@@ -118,6 +121,7 @@ class _MyAppState extends State<MyApp> {
   Future<void> requestPaymentKey() async {
     try {
       String result = await PaymobFlutterLib.requestPaymentKey(
+        countrySubDomain: CountrySubDomain.egypt,
         PaymentKeyRequest(
           authToken: _auth,
           amountCents: "35000",
@@ -159,14 +163,16 @@ class _MyAppState extends State<MyApp> {
   Future<void> startPayActivityNoToken() async {
     try {
       PaymentResult? result =
-          await _paymobFlutterLibPlugin.startPayActivityNoToken(Payment(
-        paymentKey: _paymentKey,
-        saveCardDefault: false,
-        showSaveCard: false,
-        themeColor: const Color(0xFF002B36),
-        language: "en",
-        actionbar: true,
-      ));
+          await _paymobFlutterLibPlugin.startPayActivityNoToken(
+              countrySubDomain: CountrySubDomain.egypt,
+              Payment(
+                paymentKey: _paymentKey,
+                saveCardDefault: false,
+                showSaveCard: false,
+                themeColor: const Color(0xFF002B36),
+                language: "en",
+                actionbar: true,
+              ));
       if (!mounted) return;
 
       print("transID : ${result?.id}");
@@ -193,34 +199,36 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> startPayActivityToken() async {
     try {
-      String? result =
-          await _paymobFlutterLibPlugin.startPayActivityToken(Payment(
-        paymentKey: _paymentKey,
-        saveCardDefault: false,
-        showSaveCard: true,
-        themeColor: const Color(0xFF002B36),
-        language: "en",
-        actionbar: true,
-        token: _token,
-        maskedPanNumber: _maskedPan,
-        customer: Customer(
-            firstName: "Eman",
-            lastName: "Ahmed",
-            phoneNumber: "+201012345678",
-            email: "example@gmail.com",
-            building: "7",
-            floor: "9",
-            apartment: "91",
-            city: "Alexandria",
-            state: "NA",
-            country: "Egypt",
-            postalCode: "NA"),
-      ));
+      String? result = await _paymobFlutterLibPlugin.startPayActivityToken(
+          countrySubDomain: CountrySubDomain.egypt,
+          Payment(
+            paymentKey: _paymentKey,
+            saveCardDefault: false,
+            showSaveCard: true,
+            themeColor: const Color(0xFF002B36),
+            language: "en",
+            actionbar: true,
+            token: _token,
+            maskedPanNumber: _maskedPan,
+            customer: Customer(
+                firstName: "Eman",
+                lastName: "Ahmed",
+                phoneNumber: "+201012345678",
+                email: "example@gmail.com",
+                building: "7",
+                floor: "9",
+                apartment: "91",
+                city: "Alexandria",
+                state: "NA",
+                country: "Egypt",
+                postalCode: "NA"),
+          ));
       if (!mounted) return;
 
       setState(() {
         _result = result;
       });
+
     } catch (e) {
       print("erorrrrrr 2");
       print(e);
@@ -271,14 +279,12 @@ class _MyAppState extends State<MyApp> {
                 },
                 child: const Text('startPayActivityNoToken'),
               ),
-
               MaterialButton(
                 onPressed: () async {
                   await startPayActivityToken();
                 },
                 child: const Text('startPayActivityToken'),
               ),
-
               Text(
                 'error: $_error',
                 style: const TextStyle(color: Colors.red),

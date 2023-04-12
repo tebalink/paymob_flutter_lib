@@ -52,6 +52,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 	JSONObject billingData;
 
 	String paymentKey;
+	String countrySubDomain;
 
 	String token;
 
@@ -221,6 +222,9 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 	}
 
 	void payAPIRequest(JSONObject cardData) throws JSONException {
+		Intent intent = getIntent();
+		this.countrySubDomain = intent.getStringExtra(PayActivityIntentKeys.COUNTRY_SUBDOMAIN);
+
 		JSONObject params = new JSONObject();
 		params.put("source", cardData);
 		params.put("api_source", "SDK");
@@ -239,7 +243,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 			} catch (Exception e) {
 				Log.i("NetworkClient", "can no create custom socket factory");
 			}
-		StringPOSTRequest request = new StringPOSTRequest("https://accept.paymob.com/api/acceptance/payments/pay", jsons, new Response.Listener<String>() {
+		StringPOSTRequest request = new StringPOSTRequest("https://"+countrySubDomain+".paymob.com/api/acceptance/payments/pay", jsons, new Response.Listener<String>() {
 			public void onResponse(String response) {
 				PayActivity.this.dismissProgressDialog();
 				try {
@@ -301,7 +305,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 		dismissProgressDialog();
 		Log.d("notice", "output: " + output);
 		Log.d("notice", "status code: " + status_code);
-		if (Integer.valueOf(status_code) == 401)
+		if (Integer.parseInt(status_code) == 401)
 			notifyErrorTransaction("Invalid or Expired Payment Key");
 		if (apiName.equalsIgnoreCase("USER_PAYMENT")) {
 			try {
@@ -337,13 +341,15 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 	}
 
 	private void paymentInquiry() {
+		Intent intent = getIntent();
+
 		try {
 			Log.d("notice paymentInquiry", this.payDict.toString());
 			String success = this.payDict.getString("success");
 			String txn_response_code = this.payDict.getString("txn_response_code");
-			Log.d("NOTICEEEEE paymentInquiry", "txn_response_code is " + txn_response_code);
+			Log.d("paymentInquiry", "txn_response_code is " + txn_response_code);
 			if(!android.text.TextUtils.isDigitsOnly(txn_response_code)){
-				Log.d("NOTICEEEEE paymentInquiry", "txn_response_code is String");
+				Log.d("paymentInquiry", "txn_response_code is String");
 				if (txn_response_code.equals("ERROR")){
 					String errorMsg = this.payDict.getString("data.message");
 					notifyErrorTransaction("ERROR: "+errorMsg);
@@ -351,7 +357,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 					notifyErrorTransaction("An error occured while processing the transaction");
 				}
 			}else{
-				Log.d("NOTICEEEEE paymentInquiry", "txn_response_code is Int");
+				Log.d("paymentInquiry", "txn_response_code is Int");
 				if (this.payDict.getInt("txn_response_code") == 1)
 					notifyErrorTransaction("There was an error processing the transaction");
 				if (this.payDict.getInt("txn_response_code") == 2)
@@ -362,6 +368,12 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 					notifyErrorTransaction("Insufficient Funds");
 				if (success.equals("true")) {
 					if (this.saveCardCheckBox.isChecked()) {
+
+
+						this.token = intent.getStringExtra(PayActivityIntentKeys.TOKEN);
+
+						this.countrySubDomain = intent.getStringExtra(PayActivityIntentKeys.COUNTRY_SUBDOMAIN);
+
 						JSONObject cardData = new JSONObject();
 						cardData.put("pan", this.cardNumberText.getCardNumber());
 						cardData.put("cardholder_name", this.nameText.getText().toString());
@@ -380,7 +392,8 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 							} catch (Exception e) {
 								Log.i("NetworkClient", "can no create custom socket factory");
 							}
-						StringPOSTRequest request = new StringPOSTRequest("https://accept.paymob.com/api/acceptance/tokenization?payment_token=" + this.paymentKey, jsons, new Response.Listener<String>() {
+						StringPOSTRequest request = new StringPOSTRequest("https://"+countrySubDomain+".paymob.com/api/acceptance/tokenization?payment_token="
+								+ this.paymentKey, jsons, new Response.Listener<String>() {
 							public void onResponse(String response) {
 								Log.d("notice", "tokenize response " + response);
 								PayActivity.this.dismissProgressDialog();
@@ -409,7 +422,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 				}
 			}
 		} catch (JSONException J) {
-			Log.d("notice paymentInquiry JSONException", "JSONException");
+			Log.d("notice paymentInquiry", "JSONException");
 			J.printStackTrace();
 			// notifyErrorTransaction("An error occured while reading returned message");
 			notifyErrorTransaction("An error occured while processing the transaction");
@@ -507,12 +520,12 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 				notifyCancel3dSecure();
 			} else if (resultCode == 17) {
 				String raw_pay_response = data.getStringExtra("raw_pay_response");
-				Log.d("noticeeee onActivityResult",raw_pay_response);
+				Log.d("onActivityResult",raw_pay_response);
 				try {
 					this.payDict = new JSONObject(raw_pay_response);
 					paymentInquiry();
 				} catch (Exception var6) {
-					Log.d("noticeeee onActivityResult Exception",raw_pay_response);
+					Log.d("onActivityResult",raw_pay_response);
 					notifySuccesfulTransactionParsingIssue(raw_pay_response);
 				}
 			}
@@ -585,6 +598,9 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 			this.hasBilling = true;
 		}
 		this.paymentKey = intent.getStringExtra("payment_key");
+
+		this.countrySubDomain = intent.getStringExtra(PayActivityIntentKeys.COUNTRY_SUBDOMAIN);
+
 		checkIfPassed("payment_key", this.paymentKey);
 		this.token = intent.getStringExtra("token");
 		this.maskedPanNumber = intent.getStringExtra("masked_pan_number");

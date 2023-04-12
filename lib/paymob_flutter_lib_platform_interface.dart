@@ -1,3 +1,4 @@
+import 'package:paymob_flutter_lib/helper.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'models/payment.dart';
@@ -29,12 +30,12 @@ abstract class PaymobFlutterLibPlatform extends PlatformInterface {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 
-  Future<PaymentResult?> startPayActivityNoToken(Payment payment) {
+  Future<PaymentResult?> startPayActivityNoToken(Payment payment, CountrySubDomain country) {
     throw UnimplementedError(
         'startPayActivityNoToken() has not been implemented.');
   }
 
-  Future<String?> startPayActivityToken(Payment payment) {
+  Future<String?> startPayActivityToken(Payment payment , CountrySubDomain country) {
     throw UnimplementedError(
         'startPayActivityToken() has not been implemented.');
   }

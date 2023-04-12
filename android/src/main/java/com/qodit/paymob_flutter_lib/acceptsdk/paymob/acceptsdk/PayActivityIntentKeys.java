@@ -33,6 +33,8 @@ public class PayActivityIntentKeys {
 
     public static final String SAVE_CARD_DEFAULT = "save_card_default";
 
+    public static final String COUNTRY_SUBDOMAIN = "Country_SubDomain";
+
     public static final String SHOW_SAVE_CARD = "show_save_card";
 
     public static final String THEME_COLOR = "theme_color";
