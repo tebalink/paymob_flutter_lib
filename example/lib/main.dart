@@ -22,8 +22,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final _paymobFlutterLibPlugin = PaymobFlutterLib();
   // String apiKey = 'your_api_key';
-  String apiKey =
-      'ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmpiR0Z6Y3lJNklrMWxjbU5vWVc1MElpd2ljSEp2Wm1sc1pWOXdheUk2TVRJd056RXNJbTVoYldVaU9pSXhOall6TURjeE16WXlMakl4TkRVME5DSjkuZ0NiQnNiaW12SUswcGZzV084Q1RNUWtQUjFvOGpFdDYtdGY3UWFMeTdUWnU3S3FWYXBaNlNqMlZYMGladVh6Yk9PWkhzRmRDdVdaeUVQc0N3QnZYaXc=';
+  String apiKey =    'ZXlKMGVYQWlPaUpLVjFRaUxDSmhiR2NpT2lKSVV6VXhNaUo5LmV5SmpiR0Z6Y3lJNklrMWxjbU5vWVc1MElpd2ljSEp2Wm1sc1pWOXdheUk2TWpBd09EQXNJbTVoYldVaU9pSXhOakEzTkRRMU5qSTJMakkwTURjMU9DSjkuWFlReXd3TFhJNGtXOUJ6SEwtRlIyQTJ1QTR6aG1abTVEWklaZGowZFpLV2V0Vjk0bFU1MXQ0LUJEc1c0MlVBTDh2U08yd1F4NTdxMmVLUU1obFhvNWc=';
 
   String _auth = '';
   int _orderId = 0;
@@ -36,17 +35,21 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> authenticateRequest() async {
     try {
+
       String result = await PaymobFlutterLib.authenticateRequest(apiKey);
       if (!mounted) return;
 
       setState(() {
         _auth = result;
+        print(result);
       });
     } catch (e) {
       if (!mounted) return;
 
       setState(() {
         _error = '$e';
+        print(e);
+
       });
     }
   }
@@ -58,7 +61,7 @@ class _MyAppState extends State<MyApp> {
           authToken: _auth,
           deliveryNeeded: "false",
           amountCents: "35000",
-          currency: "PKR",
+          currency: "EGP",
           // merchantOrderId: 2194,
           items: [
             // Item(
@@ -132,10 +135,10 @@ class _MyAppState extends State<MyApp> {
             postalCode: "NA",
             city: "Sargodha",
             state: "Punjab",
-            country: "PK",
+            country: "EGP",
           ),
-          currency: "PKR",
-          integrationId: 12740,
+          currency: "EGP",
+          integrationId: 2023303,
           lockOrderWhenPaid: "false",
         ),
       );
@@ -268,12 +271,14 @@ class _MyAppState extends State<MyApp> {
                 },
                 child: const Text('startPayActivityNoToken'),
               ),
+
               MaterialButton(
                 onPressed: () async {
                   await startPayActivityToken();
                 },
                 child: const Text('startPayActivityToken'),
               ),
+
               Text(
                 'error: $_error',
                 style: const TextStyle(color: Colors.red),

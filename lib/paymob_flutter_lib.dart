@@ -17,7 +17,7 @@ class PaymobFlutterLib {
   static Future<String> authenticateRequest(String apiKey) async {
     try {
       http.Response response = await http.post(
-          Uri.parse('https://pakistan.paymob.com/api/auth/tokens'),
+          Uri.parse('https://accept.paymob.com/api/auth/tokens'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
@@ -38,7 +38,7 @@ class PaymobFlutterLib {
   static Future<int> registerOrder(Order order) async {
     try {
       http.Response response = await http.post(
-          Uri.parse('https://pakistan.paymob.com/api/ecommerce/orders'),
+          Uri.parse('https://accept.paymob.com/api/ecommerce/orders'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
@@ -55,11 +55,10 @@ class PaymobFlutterLib {
   }
 
   // At this step, you will obtain a payment_key token. This key will be used to authenticate your payment request. It will be also used for verifying your transaction request metadata.
-  static Future<String> requestPaymentKey(
-      PaymentKeyRequest paymentKeyRequest) async {
+  static Future<String> requestPaymentKey(PaymentKeyRequest paymentKeyRequest) async {
     try {
       http.Response response = await http.post(
-          Uri.parse('https://pakistan.paymob.com/api/acceptance/payment_keys'),
+          Uri.parse('https://accept.paymob.com/api/acceptance/payment_keys'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },

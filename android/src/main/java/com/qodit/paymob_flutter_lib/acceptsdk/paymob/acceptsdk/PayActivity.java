@@ -239,7 +239,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 			} catch (Exception e) {
 				Log.i("NetworkClient", "can no create custom socket factory");
 			}
-		StringPOSTRequest request = new StringPOSTRequest("https://pakistan.paymob.com/api/acceptance/payments/pay", jsons, new Response.Listener<String>() {
+		StringPOSTRequest request = new StringPOSTRequest("https://accept.paymob.com/api/acceptance/payments/pay", jsons, new Response.Listener<String>() {
 			public void onResponse(String response) {
 				PayActivity.this.dismissProgressDialog();
 				try {
@@ -380,7 +380,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 							} catch (Exception e) {
 								Log.i("NetworkClient", "can no create custom socket factory");
 							}
-						StringPOSTRequest request = new StringPOSTRequest("https://pakistan.paymob.com/api/acceptance/tokenization?payment_token=" + this.paymentKey, jsons, new Response.Listener<String>() {
+						StringPOSTRequest request = new StringPOSTRequest("https://accept.paymob.com/api/acceptance/tokenization?payment_token=" + this.paymentKey, jsons, new Response.Listener<String>() {
 							public void onResponse(String response) {
 								Log.d("notice", "tokenize response " + response);
 								PayActivity.this.dismissProgressDialog();
