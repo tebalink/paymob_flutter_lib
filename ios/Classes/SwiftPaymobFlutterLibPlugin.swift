@@ -91,7 +91,7 @@ public class SwiftPaymobFlutterLibPlugin: NSObject, FlutterPlugin,AcceptSDKDeleg
                         return
                 }
                 let paymentt = try! JSONDecoder().decode(Payment.self,from: Data(paymentStr.utf8))
-            
+
                 self.startPayActivityNoToken(result: result,payment: paymentt)
             case "StartPayActivityToken":
               guard let args = call.arguments as? [String: Any],
@@ -112,7 +112,9 @@ public class SwiftPaymobFlutterLibPlugin: NSObject, FlutterPlugin,AcceptSDKDeleg
                         return w.isHidden == false
              }).first?.rootViewController
 
-            try accept.presentPayVC(vC: rootViewController, paymentKey: payment.paymentKey ?? "", country: .Pakistan, saveCardDefault: payment.saveCardDefault ?? false, showSaveCard: payment.showSaveCard ?? false, showAlerts: true, language: .English)
+            try accept.presentPayVC(vC: rootViewController, paymentKey: payment.paymentKey ?? "",
+             country: .Egypt, saveCardDefault: payment.saveCardDefault ?? false,
+             showSaveCard: payment.showSaveCard ?? false, showAlerts: true, language: .English)
         } catch AcceptSDKError.MissingArgumentError(let errorMessage) {
             print(errorMessage)
         }  catch let error {

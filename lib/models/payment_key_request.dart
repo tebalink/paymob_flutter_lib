@@ -28,6 +28,7 @@ class PaymentKeyRequest {
   int? integrationId;
   String? lockOrderWhenPaid;
 
+
   Map<String, dynamic> toJson() => {
         "auth_token": authToken ?? authToken,
         "amount_cents": amountCents ?? amountCents,
