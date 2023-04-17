@@ -23,9 +23,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final _paymobFlutterLibPlugin = PaymobFlutterLib();
 
-  // String apiKey = 'your_api_key';
-  String apiKey =
-      'ZXlKMGVYQWlPaUpLVjFRaUxDSmhiR2NpT2lKSVV6VXhNaUo5LmV5SmpiR0Z6Y3lJNklrMWxjbU5vWVc1MElpd2ljSEp2Wm1sc1pWOXdheUk2TWpBd09EQXNJbTVoYldVaU9pSXhOakEzTkRRMU5qSTJMakkwTURjMU9DSjkuWFlReXd3TFhJNGtXOUJ6SEwtRlIyQTJ1QTR6aG1abTVEWklaZGowZFpLV2V0Vjk0bFU1MXQ0LUJEc1c0MlVBTDh2U08yd1F4NTdxMmVLUU1obFhvNWc=';
+  String apiKey = 'your_api_key';
 
   String _auth = '';
   int _orderId = 0;
