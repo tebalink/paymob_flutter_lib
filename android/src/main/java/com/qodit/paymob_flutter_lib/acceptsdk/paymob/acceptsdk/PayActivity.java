@@ -243,7 +243,8 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 			} catch (Exception e) {
 				Log.i("NetworkClient", "can no create custom socket factory");
 			}
-		StringPOSTRequest request = new StringPOSTRequest("https://"+countrySubDomain+".paymob.com/api/acceptance/payments/pay", jsons, new Response.Listener<String>() {
+		StringPOSTRequest request = new StringPOSTRequest("https://"+countrySubDomain+".paymob.com/api/acceptance/payments/pay",
+				jsons, new Response.Listener<String>() {
 			public void onResponse(String response) {
 				PayActivity.this.dismissProgressDialog();
 				try {
@@ -255,7 +256,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 						if (direct3dSecure.equals("true")) {
 							String redirectionURL = jsonResult.getString("redirection_url");
 							if (redirectionURL != null) {
-								PayActivity.this.open3DSecureView(redirectionURL);
+								PayActivity.this.open3DSecureView(redirectionURL,countrySubDomain);
 							} else {
 								PayActivity.this.dismissProgressDialog();
 								PayActivity.this.notifyErrorTransaction("An error occured while reading the 3dsecure redirection URL");
@@ -289,7 +290,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 		showProgressDialog();
 	}
 
-	private void open3DSecureView(String url) {
+	private void open3DSecureView(String url ,String countrySubDomain) {
 		Intent intent = getIntent();
 		this.themeColor = intent.getIntExtra("theme_color", getApplicationContext().getResources().getColor(R.color.colorPrimaryDark));
 		Boolean actionBar = intent.getBooleanExtra("ActionBar", false);
@@ -298,7 +299,9 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 		threeDSecureViewIntent.putExtra("ActionBar", actionBar);
 		threeDSecureViewIntent.putExtra("theme_color", this.themeColor);
 		threeDSecureViewIntent.putExtra("three_d_secure_activity_title", this.verificationActivity_title);
+		threeDSecureViewIntent.putExtra("country_subDomain", countrySubDomain);
 		startActivityForResult(threeDSecureViewIntent, IntentConstants.THREE_D_SECURE_VERIFICATION_REQUEST);
+
 	}
 
 	public void processFinish(String apiName, String output, String status_code) {
@@ -310,7 +313,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 		if (apiName.equalsIgnoreCase("USER_PAYMENT")) {
 			try {
 				JSONObject jsonResult = new JSONObject(output);
-				Log.d("notice", "json output: " + jsonResult);
+				Log.d("notice", "json output2: " + jsonResult);
 				String direct3dSecure = jsonResult.getString("is_3d_secure");
 				if (direct3dSecure != null) {
 					this.payDict = jsonResult;
@@ -343,6 +346,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 	private void paymentInquiry() {
 		Intent intent = getIntent();
 
+		java.lang.Object Log;
 		try {
 			Log.d("notice paymentInquiry", this.payDict.toString());
 			String success = this.payDict.getString("success");
@@ -368,7 +372,6 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 					notifyErrorTransaction("Insufficient Funds");
 				if (success.equals("true")) {
 					if (this.saveCardCheckBox.isChecked()) {
-
 
 						this.token = intent.getStringExtra(PayActivityIntentKeys.TOKEN);
 
@@ -451,7 +454,9 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 	private void putSaveCardData(Intent intent, JSONObject saveCardData) {
 		for (int i = 0; i < SaveCardResponseKeys.SAVE_CARD_DICT_KEYS.length; i++) {
 			try {
-				intent.putExtra(SaveCardResponseKeys.SAVE_CARD_DICT_KEYS[i], saveCardData
+				intent.putExtra(
+						SaveCardResponseKeys.SAVE_CARD_DICT_KEYS[i],
+						saveCardData
 						.getString(SaveCardResponseKeys.SAVE_CARD_DICT_KEYS[i]));
 			} catch (JSONException jSONException) {}
 		}

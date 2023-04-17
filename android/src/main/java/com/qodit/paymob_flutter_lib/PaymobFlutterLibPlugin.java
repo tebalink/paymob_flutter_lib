@@ -148,10 +148,6 @@ public class PaymobFlutterLibPlugin implements FlutterPlugin, MethodCallHandler,
 
         countrySubDomain =  String.valueOf(arg.get("countrySubDomain"));
 
-        Log.i("countrySubDomain", String.valueOf(arg.get("countrySubDomain")));
-        Log.i("countrySubDomain", countrySubDomain);
-
-
         payment = Converter.fromJsonString((String)arg.get("payment"));
 
         StartPayActivityNoToken();
@@ -165,8 +161,6 @@ public class PaymobFlutterLibPlugin implements FlutterPlugin, MethodCallHandler,
         payment = Converter.fromJsonString((String)arg.get("payment"));
 
         countrySubDomain =  String.valueOf(arg.get("countrySubDomain"));
-        Log.i("countrySubDomain", String.valueOf(arg.get("countrySubDomain")));
-        Log.i("countrySubDomain", countrySubDomain);
 
         StartPayActivityToken();
 

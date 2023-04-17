@@ -18,6 +18,7 @@ import com.qodit.paymob_flutter_lib.R;
 
 public class ThreeDSecureWebViewActivty extends AppCompatActivity {
     String authenticationUrl;
+    String countrySubDomain;
 
     int themeColor;
 
@@ -34,7 +35,7 @@ public class ThreeDSecureWebViewActivty extends AppCompatActivity {
         webView.setWebViewClient(new WebViewClient() {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 Log.d("Accept - NEW URL: ", url);
-                if (url.startsWith("https://accept.paymob.com/api/acceptance/post_pay")) {
+                if (url.startsWith("https://"+countrySubDomain+".paymob.com/api/acceptance/shopify_callback")) {
                     Log.d("Accept - SUCCESS_URL", url);
                     Intent intent = new Intent();
                     try {
@@ -70,8 +71,9 @@ public class ThreeDSecureWebViewActivty extends AppCompatActivity {
     private void getThreeDSecureParameters() {
         Intent intent = getIntent();
         this.authenticationUrl = intent.getStringExtra("three_d_secure_url");
+        this.countrySubDomain = intent.getStringExtra("country_subDomain");
         checkIfPassed("three_d_secure_url", this.authenticationUrl);
-        this.themeColor = intent.getIntExtra("theme_color", getApplicationContext().getResources().getColor(R.color.colorPrimaryDark));
+         this.themeColor = intent.getIntExtra("theme_color", getApplicationContext().getResources().getColor(R.color.colorPrimaryDark));
     }
 
     @RequiresApi(api = 21)
