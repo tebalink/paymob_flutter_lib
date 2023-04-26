@@ -38,13 +38,14 @@ public class ThreeDSecureWebViewActivty extends AppCompatActivity {
 
                 Log.d("Accept3  ",
 
-                        String.valueOf(url.startsWith("https://"+countrySubDomain+".paymob.com/api/acceptance/shopify_callback")));
-                if (url.startsWith("https://"+countrySubDomain+".paymob.com/api/acceptance/shopify_callback")) {
+                        String.valueOf(url.contentEquals("https://"+countrySubDomain+".paymob.com/api/acceptance/shopify_callback")));
+                if (url.contentEquals("https://"+countrySubDomain+".paymob.com/api/acceptance/shopify_callback")) {
+
                     Log.d("Accept2 - SUCCESS_URL", url);
 
                     Log.d("Accept4 ",
 
-                            String.valueOf(url.startsWith("https://"+countrySubDomain+".paymob.com/api/acceptance/shopify_callback")));
+                            String.valueOf(url.contentEquals("https://"+countrySubDomain+".paymob.com/api/acceptance/shopify_callback")));
 
                     Intent intent = new Intent();
                     try {
