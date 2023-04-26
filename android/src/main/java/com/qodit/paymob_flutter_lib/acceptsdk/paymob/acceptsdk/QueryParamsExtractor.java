@@ -50,7 +50,7 @@ class QueryParamsExtractor {
                 }
             }
 
-            Log.i("sssssss",JSON.toString());
+            Log.d("sssssss",JSON.toString());
 
             return JSON.toString();
         } catch (Exception ex) {

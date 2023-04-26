@@ -1,5 +1,7 @@
 package com.qodit.paymob_flutter_lib.acceptsdk.paymob.acceptsdk;
 
+import static com.qodit.paymob_flutter_lib.acceptsdk.paymob.acceptsdk.IntentConstants.TRANSACTION_SUCCESSFUL;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -166,7 +168,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 	private void onCancelPress() {
 		if (this.status == Status.IDLE) {
 			Intent canceledIntent = new Intent();
-			setResult(1, canceledIntent);
+			setResult(IntentConstants.USER_CANCELED, canceledIntent);
 			finish();
 		}
 	}
@@ -234,28 +236,27 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 		String jsons = params.toString();
 		RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 		HttpStack stack = null;
-		if (Build.VERSION.SDK_INT >= 9)
-			try {
-				if (Build.VERSION.SDK_INT <= 19) {
-					HurlStack hurlStack = new HurlStack(null, new TLSSocketFactory());
-					queue = Volley.newRequestQueue(getApplicationContext(), (HttpStack)hurlStack);
-				}
-			} catch (Exception e) {
-				Log.i("NetworkClient", "can no create custom socket factory");
+		try {
+			if (Build.VERSION.SDK_INT <= 19) {
+				HurlStack hurlStack = new HurlStack(null, new TLSSocketFactory());
+				queue = Volley.newRequestQueue(getApplicationContext(), (HttpStack)hurlStack);
 			}
+		} catch (Exception e) {
+			Log.i("NetworkClient", "can no create custom socket factory");
+		}
 		StringPOSTRequest request = new StringPOSTRequest("https://"+countrySubDomain+".paymob.com/api/acceptance/payments/pay",
 				jsons, new Response.Listener<String>() {
 			public void onResponse(String response) {
 				PayActivity.this.dismissProgressDialog();
 				try {
 					JSONObject jsonResult = new JSONObject(response);
-					Log.d("notice", "json output: " + jsonResult);
+					Log.d("notice211", "json output: " + jsonResult);
 					String direct3dSecure = jsonResult.getString("is_3d_secure");
-					if (direct3dSecure != null) {
+					if (!direct3dSecure.isEmpty()) {
 						PayActivity.this.payDict = jsonResult;
 						if (direct3dSecure.equals("true")) {
 							String redirectionURL = jsonResult.getString("redirection_url");
-							if (redirectionURL != null) {
+							if (!redirectionURL.isEmpty()) {
 								PayActivity.this.open3DSecureView(redirectionURL,countrySubDomain);
 							} else {
 								PayActivity.this.dismissProgressDialog();
@@ -300,7 +301,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 		threeDSecureViewIntent.putExtra("theme_color", this.themeColor);
 		threeDSecureViewIntent.putExtra("three_d_secure_activity_title", this.verificationActivity_title);
 		threeDSecureViewIntent.putExtra("country_subDomain", countrySubDomain);
-		startActivityForResult(threeDSecureViewIntent, IntentConstants.THREE_D_SECURE_VERIFICATION_REQUEST);
+		 startActivityForResult(threeDSecureViewIntent, IntentConstants.THREE_D_SECURE_VERIFICATION_REQUEST);
 
 	}
 
@@ -311,21 +312,28 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 		if (Integer.parseInt(status_code) == 401)
 			notifyErrorTransaction("Invalid or Expired Payment Key");
 		if (apiName.equalsIgnoreCase("USER_PAYMENT")) {
+
 			try {
+				Intent intent = getIntent();
+
 				JSONObject jsonResult = new JSONObject(output);
 				Log.d("notice", "json output2: " + jsonResult);
 				String direct3dSecure = jsonResult.getString("is_3d_secure");
-				if (direct3dSecure != null) {
+				if (!direct3dSecure.isEmpty()) {
 					this.payDict = jsonResult;
 					if (direct3dSecure.equals("true")) {
+						this.countrySubDomain = intent.getStringExtra(PayActivityIntentKeys.COUNTRY_SUBDOMAIN);
+
 						String redirectionURL = jsonResult.getString("redirection_url");
-						if (redirectionURL != null) {
-							open3DSecureView(redirectionURL);
-						} else {
+						if (!redirectionURL.isEmpty()) {
+							open3DSecureView(redirectionURL,countrySubDomain);
+						}
+						else {
 							dismissProgressDialog();
 							notifyErrorTransaction("An error occured while reading the 3dsecure redirection URL");
 						}
-					} else {
+					}
+					else {
 						paymentInquiry();
 					}
 				} else {
@@ -346,8 +354,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 	private void paymentInquiry() {
 		Intent intent = getIntent();
 
-		java.lang.Object Log;
-		try {
+ 		try {
 			Log.d("notice paymentInquiry", this.payDict.toString());
 			String success = this.payDict.getString("success");
 			String txn_response_code = this.payDict.getString("txn_response_code");
@@ -386,15 +393,14 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 						String jsons = cardData.toString();
 						RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
 						HttpStack stack = null;
-						if (Build.VERSION.SDK_INT >= 9)
-							try {
-								if (Build.VERSION.SDK_INT <= 19) {
-									HurlStack hurlStack = new HurlStack(null, new TLSSocketFactory());
-									queue = Volley.newRequestQueue(getApplicationContext(), (HttpStack)hurlStack);
-								}
-							} catch (Exception e) {
-								Log.i("NetworkClient", "can no create custom socket factory");
+						try {
+							if (Build.VERSION.SDK_INT <= 19) {
+								HurlStack hurlStack = new HurlStack(null, new TLSSocketFactory());
+								queue = Volley.newRequestQueue(getApplicationContext(), (HttpStack)hurlStack);
 							}
+						} catch (Exception e) {
+							Log.i("NetworkClient", "can no create custom socket factory");
+						}
 						StringPOSTRequest request = new StringPOSTRequest("https://"+countrySubDomain+".paymob.com/api/acceptance/tokenization?payment_token="
 								+ this.paymentKey, jsons, new Response.Listener<String>() {
 							public void onResponse(String response) {
@@ -465,7 +471,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 	private void notifyErrorTransaction(String reason) {
 		Intent errorIntent = new Intent();
 		errorIntent.putExtra("transaction_error_reason", reason); 
-		setResult(3, errorIntent);
+		setResult(IntentConstants.TRANSACTION_ERROR, errorIntent);
 		finish();
 	}
 
@@ -497,7 +503,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 		Intent successIntent = new Intent();
 		try {
 			putPayDataInIntent(successIntent);
-			setResult(6, successIntent);
+			setResult(IntentConstants.TRANSACTION_SUCCESSFUL, successIntent);
 			finish();
 		} catch (JSONException J) {
 			notifySuccesfulTransactionParsingIssue(this.payDict.toString());
@@ -507,7 +513,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 	private void notifySuccesfulTransactionParsingIssue(String raw_pay_response) {
 		Intent successIntent = new Intent();
 		successIntent.putExtra(IntentConstants.RAW_PAY_RESPONSE, raw_pay_response);
-		setResult(7, successIntent);
+		setResult(IntentConstants.TRANSACTION_SUCCESSFUL_PARSING_ISSUE, successIntent);
 		finish();
 	}
 
@@ -519,11 +525,11 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == IntentConstants.THREE_D_SECURE_VERIFICATION_REQUEST)
-			if (resultCode == 2) {
+			if (resultCode == IntentConstants.MISSING_ARGUMENT) {
 				notifyCancel3dSecure();
-			} else if (resultCode == 1) {
+			} else if (resultCode == IntentConstants.USER_CANCELED) {
 				notifyCancel3dSecure();
-			} else if (resultCode == 17) {
+			} else if ( resultCode == IntentConstants.USER_FINISHED_3D_VERIFICATION ) {
 				String raw_pay_response = data.getStringExtra(IntentConstants.RAW_PAY_RESPONSE);
 				Log.d("onActivityResult",raw_pay_response);
 				try {

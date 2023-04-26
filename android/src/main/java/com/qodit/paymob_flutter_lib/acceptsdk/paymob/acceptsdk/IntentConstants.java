@@ -1,9 +1,9 @@
 package com.qodit.paymob_flutter_lib.acceptsdk.paymob.acceptsdk;
 
 public final class IntentConstants {
-    static final Integer CARD_IO_SCAN_REQUEST = Integer.valueOf(16);
+    static final Integer CARD_IO_SCAN_REQUEST = 16;
 
-    static final Integer THREE_D_SECURE_VERIFICATION_REQUEST = Integer.valueOf(32);
+    static final Integer THREE_D_SECURE_VERIFICATION_REQUEST = 32;
 
     public static final int USER_CANCELED = 1;
 
