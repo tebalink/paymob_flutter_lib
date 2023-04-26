@@ -244,6 +244,10 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 		} catch (Exception e) {
 			Log.i("NetworkClient", "can no create custom socket factory");
 		}
+
+
+		Log.d("payments/pay","https://"+countrySubDomain+".paymob.com/api/acceptance/payments/pay");
+
 		StringPOSTRequest request = new StringPOSTRequest("https://"+countrySubDomain+".paymob.com/api/acceptance/payments/pay",
 				jsons, new Response.Listener<String>() {
 			public void onResponse(String response) {
@@ -285,9 +289,13 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 					PayActivity.this.notifyErrorTransaction("Invalid or Expired Payment Key");
 			}
 		});
+
+
 		request.setRetryPolicy(new DefaultRetryPolicy(30000, 1, 1.0F));
 		request.setTag(0);
 		queue.add((Request)request);
+		Log.d("request/payments/pay",request.toString());
+
 		showProgressDialog();
 	}
 
