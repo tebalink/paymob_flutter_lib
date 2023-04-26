@@ -7,6 +7,8 @@ import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.flutter.Log;
+
 class QueryParamsExtractor {
     public static Map<String, String> getQueryParams3(String url) {
         try {
@@ -47,6 +49,9 @@ class QueryParamsExtractor {
                     }
                 }
             }
+
+            Log.d("sssssss",JSON.toString());
+
             return JSON.toString();
         } catch (Exception ex) {
             return null;

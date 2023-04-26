@@ -407,15 +407,15 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 								NetworkResponse networkResponse = error.networkResponse;
 								PayActivity.this.dismissProgressDialog();
 								Log.d("notice", "tokenize error response " + error);
-								if (networkResponse != null &&
-										networkResponse.statusCode == 401)
+								if (networkResponse != null && networkResponse.statusCode == 401)
 									PayActivity.this.notifyErrorTransaction("Invalid or Expired Payment Key");
 							}
 						});
 						request.setRetryPolicy(new DefaultRetryPolicy(30000, 1, 1.0F));
 						request.setTag(0);
 						queue.add((Request)request);
-					} else {
+					}
+					else {
 						dismissProgressDialog();
 						notifySuccesfulTransaction();
 					}
@@ -475,7 +475,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 			putPayDataInIntent(cancel3dSecureIntent);
 			setResult(9, cancel3dSecureIntent);
 		} catch (JSONException J) {
-			cancel3dSecureIntent.putExtra("raw_pay_response", this.payDict.toString());
+			cancel3dSecureIntent.putExtra(IntentConstants.RAW_PAY_RESPONSE, this.payDict.toString());
 			setResult(10, cancel3dSecureIntent);
 		}
 		finish();
@@ -487,7 +487,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 			putPayDataInIntent(rejectIntent);
 			setResult(4, rejectIntent);
 		} catch (JSONException J) {
-			rejectIntent.putExtra("raw_pay_response", this.payDict.toString());
+			rejectIntent.putExtra(IntentConstants.RAW_PAY_RESPONSE, this.payDict.toString());
 			setResult(5, rejectIntent);
 		}
 		finish();
@@ -506,7 +506,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 
 	private void notifySuccesfulTransactionParsingIssue(String raw_pay_response) {
 		Intent successIntent = new Intent();
-		successIntent.putExtra("raw_pay_response", raw_pay_response);
+		successIntent.putExtra(IntentConstants.RAW_PAY_RESPONSE, raw_pay_response);
 		setResult(7, successIntent);
 		finish();
 	}
@@ -524,7 +524,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 			} else if (resultCode == 1) {
 				notifyCancel3dSecure();
 			} else if (resultCode == 17) {
-				String raw_pay_response = data.getStringExtra("raw_pay_response");
+				String raw_pay_response = data.getStringExtra(IntentConstants.RAW_PAY_RESPONSE);
 				Log.d("onActivityResult",raw_pay_response);
 				try {
 					this.payDict = new JSONObject(raw_pay_response);

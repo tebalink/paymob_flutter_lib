@@ -34,15 +34,15 @@ public class ThreeDSecureWebViewActivty extends AppCompatActivity {
         WebView webView = (WebView)findViewById(R.id.webView1);
         webView.setWebViewClient(new WebViewClient() {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                Log.d("Accept - NEW URL: ", url);
-                if (url.startsWith("https://"+countrySubDomain+".paymob.com/api/acceptance/shopify_callback")) {
+                 if (url.startsWith("https://"+countrySubDomain+".paymob.com/api/acceptance/shopify_callback")) {
                     Log.d("Accept - SUCCESS_URL", url);
                     Intent intent = new Intent();
                     try {
-                        intent.putExtra("raw_pay_response", QueryParamsExtractor.getQueryParams(url));
-                        ThreeDSecureWebViewActivty.this.setResult(17, intent);
+                        intent.putExtra(IntentConstants.RAW_PAY_RESPONSE , QueryParamsExtractor.getQueryParams(url));
+                        ThreeDSecureWebViewActivty.this.setResult(IntentConstants.TRANSACTION_SUCCESSFUL, intent);
+
                     } catch (Exception exception) {}
-                    ThreeDSecureWebViewActivty.this.finish();
+//                    ThreeDSecureWebViewActivty.this.finish();
                     return true;
                 }
                 return false;

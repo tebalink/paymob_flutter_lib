@@ -63,7 +63,7 @@ public class PaymobFlutterLibPlugin implements FlutterPlugin, MethodCallHandler,
     // this key is used to save the card by deafult.
     pay_intent.putExtra(PayActivityIntentKeys.SAVE_CARD_DEFAULT, payment.getSaveCardDefault());
 
-   // this key is used to save the card by deafult.
+    // this key is used to save the card by deafult.
     pay_intent.putExtra(PayActivityIntentKeys.COUNTRY_SUBDOMAIN,countrySubDomain);
 
     // this key is used to display the savecard checkbox.
@@ -79,8 +79,6 @@ public class PaymobFlutterLibPlugin implements FlutterPlugin, MethodCallHandler,
     pay_intent.putExtra("language",payment.getLanguage());
 
     activity.startActivityForResult(pay_intent, ACCEPT_PAYMENT_REQUEST);
-    // Intent secure_intent = new Intent(context, ThreeDSecureWebViewActivty.class);
-    // secure_intent.putExtra("ActionBar",payment.getActionbar());
   }
 
   public void StartPayActivityToken() {
@@ -185,7 +183,7 @@ public class PaymobFlutterLibPlugin implements FlutterPlugin, MethodCallHandler,
     pendingResult.error(errorCode, errorMessage, null);
   }
 
-  public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
+  public boolean onActivityResult(int requestCode, int resultCode, Intent data)  {
     Bundle extras = data.getExtras();
 
     if (requestCode == ACCEPT_PAYMENT_REQUEST) {
