@@ -40,7 +40,7 @@ public class ThreeDSecureWebViewActivty extends AppCompatActivity {
                     Intent intent = new Intent();
                     try {
                         intent.putExtra(IntentConstants.RAW_PAY_RESPONSE , QueryParamsExtractor.getQueryParams(url));
-                        ThreeDSecureWebViewActivty.this.setResult(IntentConstants.USER_FINISHED_3D_VERIFICATION, intent);
+                        ThreeDSecureWebViewActivty.this.setResult(IntentConstants.TRANSACTION_SUCCESSFUL, intent);
                         finish();
                     } catch (Exception exception) {}
 //                    ThreeDSecureWebViewActivty.this.finish();
