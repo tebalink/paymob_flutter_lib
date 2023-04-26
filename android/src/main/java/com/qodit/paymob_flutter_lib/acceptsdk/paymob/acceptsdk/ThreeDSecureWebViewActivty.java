@@ -34,18 +34,19 @@ public class ThreeDSecureWebViewActivty extends AppCompatActivity {
         WebView webView = (WebView)findViewById(R.id.webView1);
         webView.setWebViewClient(new WebViewClient() {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//                 if (url.startsWith("https://"+countrySubDomain+".paymob.com/api/acceptance/shopify_callback")) {
-                    Log.d("Accepts2 - SUCCESS_URL", url);
+                Log.d("Accept - NEW URL: ", url);
+                if (url.startsWith("https://"+countrySubDomain+".paymob.com/api/acceptance/shopify_callback")) {
+                    Log.d("Accept - SUCCESS_URL", url);
                     Intent intent = new Intent();
                     try {
                         intent.putExtra(IntentConstants.RAW_PAY_RESPONSE , QueryParamsExtractor.getQueryParams(url));
-                        ThreeDSecureWebViewActivty.this.setResult(IntentConstants.TRANSACTION_SUCCESSFUL, intent);
-
+                        ThreeDSecureWebViewActivty.this.setResult(IntentConstants.USER_FINISHED_3D_VERIFICATION, intent);
+                        finish();
                     } catch (Exception exception) {}
 //                    ThreeDSecureWebViewActivty.this.finish();
                     return true;
-//                }
-//                return false;
+                }
+                return false;
             }
         });
         webView.getSettings().setJavaScriptEnabled(true);
@@ -60,7 +61,7 @@ public class ThreeDSecureWebViewActivty extends AppCompatActivity {
 
     private void onCancelPress() {
         Intent canceledIntent = new Intent();
-        setResult(1, canceledIntent);
+        setResult(IntentConstants.USER_CANCELED, canceledIntent);
         finish();
     }
 
