@@ -520,6 +520,8 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 		Intent successIntent = new Intent();
 		try {
 			putPayDataInIntent(successIntent);
+			successIntent.putExtra(PayResponseKeys.payload ,  this.payDict.toString());
+
 			setResult(IntentConstants.TRANSACTION_SUCCESSFUL, successIntent);
 			finish();
 		} catch (JSONException J) {

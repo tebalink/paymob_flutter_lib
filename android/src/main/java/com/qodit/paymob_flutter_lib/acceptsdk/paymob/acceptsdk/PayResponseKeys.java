@@ -53,7 +53,8 @@ public class PayResponseKeys {
 
     public static final String ORDER = "order";
 
-    static final String REDIRECTION_URL = "redirection_url";
+    public static final String payload = "data_payload";
+
 
     static final String[] PAY_DICT_KEYS = new String[] {
             "amount_cents", "is_refunded", "is_capture", "captured_amount", "source_data.type", "pending",  "is_3d_secure", "id", "is_void",

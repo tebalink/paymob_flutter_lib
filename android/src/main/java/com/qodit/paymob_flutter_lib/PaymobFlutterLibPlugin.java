@@ -220,7 +220,14 @@ public class PaymobFlutterLibPlugin implements FlutterPlugin, MethodCallHandler,
           paymentResult.setMaskedPan("");
           paymentResult.setID(extras.getString(PayResponseKeys.ID));
           paymentResult.setDataMessage(extras.getString(PayResponseKeys.DATA_MESSAGE));
-          // Use the static keys declared in PayResponseKeys to extract the fields you want
+          paymentResult.setDataPayload(extras.getString(PayResponseKeys.payload));
+
+        try {
+          Log.d("payload",ResultConverter.toJsonString(paymentResult));
+        } catch (JsonProcessingException e) {
+          throw new RuntimeException(e);
+        }
+        // Use the static keys declared in PayResponseKeys to extract the fields you want
 
           // Use the static keys declared in PayResponseKeys to extract the fields you want
           // Use the static keys declared in SaveCardResponseKeys to extract the fields you want

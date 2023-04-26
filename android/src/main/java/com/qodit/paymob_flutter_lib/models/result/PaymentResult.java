@@ -4,14 +4,23 @@ import com.fasterxml.jackson.annotation.*;
 
 public class PaymentResult {
     private String dataMessage;
+    private String Payload;
     private String token;
     private String maskedPan;
     private String id;
 
     @JsonProperty("data_message")
     public String getDataMessage() { return dataMessage; }
+
     @JsonProperty("data_message")
     public void setDataMessage(String value) { this.dataMessage = value; }
+
+
+    @JsonProperty("data_payload")
+    public String getDataPayload() { return Payload; }
+
+    @JsonProperty("data_payload")
+    public void setDataPayload(String value) { this.Payload = value; }
 
     @JsonProperty("token")
     public String getToken() { return token; }
