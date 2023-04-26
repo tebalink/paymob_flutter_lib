@@ -314,11 +314,15 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 	}
 
 	public void processFinish(String apiName, String output, String status_code) {
+
 		dismissProgressDialog();
+
 		Log.d("notice", "output: " + output);
 		Log.d("notice", "status code: " + status_code);
+
 		if (Integer.parseInt(status_code) == 401)
 			notifyErrorTransaction("Invalid or Expired Payment Key");
+
 		if (apiName.equalsIgnoreCase("USER_PAYMENT")) {
 
 			try {
@@ -363,19 +367,23 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 		Intent intent = getIntent();
 
  		try {
-			Log.d("notice paymentInquiry", this.payDict.toString());
+
+		    Log.d("notice paymentInquiry", this.payDict.toString());
 			String success = this.payDict.getString("success");
 			String txn_response_code = this.payDict.getString("txn_response_code");
 			Log.d("paymentInquiry", "txn_response_code is " + txn_response_code);
+
 			if(!android.text.TextUtils.isDigitsOnly(txn_response_code)){
 				Log.d("paymentInquiry", "txn_response_code is String");
 				if (txn_response_code.equals("ERROR")){
 					String errorMsg = this.payDict.getString("data.message");
 					notifyErrorTransaction("ERROR: "+errorMsg);
-				}else{
+				}
+				else{
 					notifyErrorTransaction("An error occured while processing the transaction");
 				}
-			}else{
+			}
+			else{
 				Log.d("paymentInquiry", "txn_response_code is Int");
 				if (this.payDict.getInt("txn_response_code") == 1)
 					notifyErrorTransaction("There was an error processing the transaction");
@@ -438,6 +446,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 					notifyRejectedTransaction();
 				}
 			}
+
 		} catch (JSONException J) {
 			Log.d("notice paymentInquiry", "JSONException");
 			J.printStackTrace();
@@ -487,10 +496,10 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 		Intent cancel3dSecureIntent = new Intent();
 		try {
 			putPayDataInIntent(cancel3dSecureIntent);
-			setResult(9, cancel3dSecureIntent);
+			setResult(IntentConstants.USER_CANCELED_3D_SECURE_VERIFICATION, cancel3dSecureIntent);
 		} catch (JSONException J) {
 			cancel3dSecureIntent.putExtra(IntentConstants.RAW_PAY_RESPONSE, this.payDict.toString());
-			setResult(10, cancel3dSecureIntent);
+			setResult(IntentConstants.USER_CANCELED_3D_SECURE_VERIFICATION_PARSING_ISSUE, cancel3dSecureIntent);
 		}
 		finish();
 	}
@@ -532,6 +541,10 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
+		String raw_pay_responses = data.getStringExtra(IntentConstants.RAW_PAY_RESPONSE);
+
+		Log.d("raw_pay_responses",raw_pay_responses);
+
 		if (requestCode == IntentConstants.THREE_D_SECURE_VERIFICATION_REQUEST)
 			if (resultCode == IntentConstants.MISSING_ARGUMENT) {
 				notifyCancel3dSecure();
