@@ -379,7 +379,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 					notifyErrorTransaction("ERROR: "+errorMsg);
 				}
 				else{
-					notifyErrorTransaction("An error occured while processing the transaction");
+					notifyErrorTransaction("An error occurred while processing the transaction");
 				}
 			}
 			else{
@@ -487,9 +487,16 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 
 	private void notifyErrorTransaction(String reason) {
 		Intent errorIntent = new Intent();
-		errorIntent.putExtra("transaction_error_reason", reason); 
-		setResult(IntentConstants.TRANSACTION_ERROR, errorIntent);
-		finish();
+		try {
+			putPayDataInIntent(errorIntent);
+			errorIntent.putExtra("transaction_error_reason", reason);
+			setResult(IntentConstants.TRANSACTION_ERROR, errorIntent);
+			finish();
+		} catch (JSONException jsonException) {
+			jsonException.printStackTrace();
+		}
+
+
 	}
 
 	private void notifyCancel3dSecure() {
