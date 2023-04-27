@@ -368,7 +368,6 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 
  		try {
 
-		    Log.d("notice paymentInquiry", this.payDict.toString());
 			String success = this.payDict.getString("success");
 			String txn_response_code = this.payDict.getString("txn_response_code");
 			Log.d("paymentInquiry", "txn_response_code is " + txn_response_code);
@@ -441,7 +440,8 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 						dismissProgressDialog();
 						notifySuccesfulTransaction();
 					}
-				} else {
+				}
+				else {
 					dismissProgressDialog();
 					notifyRejectedTransaction();
 				}
@@ -508,10 +508,10 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 		Intent rejectIntent = new Intent();
 		try {
 			putPayDataInIntent(rejectIntent);
-			setResult(4, rejectIntent);
+			setResult(IntentConstants.TRANSACTION_REJECTED, rejectIntent);
 		} catch (JSONException J) {
 			rejectIntent.putExtra(IntentConstants.RAW_PAY_RESPONSE, this.payDict.toString());
-			setResult(5, rejectIntent);
+			setResult(IntentConstants.TRANSACTION_REJECTED_PARSING_ISSUE, rejectIntent);
 		}
 		finish();
 	}
@@ -520,7 +520,6 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 		Intent successIntent = new Intent();
 		try {
 			putPayDataInIntent(successIntent);
-			successIntent.putExtra(PayResponseKeys.payload ,  this.payDict.toString());
 
 			setResult(IntentConstants.TRANSACTION_SUCCESSFUL, successIntent);
 			finish();
@@ -537,6 +536,8 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 	}
 
 	private void putPayDataInIntent(Intent intent) throws JSONException {
+		intent.putExtra(PayResponseKeys.payload ,  this.payDict.toString());
+
 		for (int i = 0; i < PayResponseKeys.PAY_DICT_KEYS.length; i++)
 			intent.putExtra(PayResponseKeys.PAY_DICT_KEYS[i], this.payDict.getString(PayResponseKeys.PAY_DICT_KEYS[i]));
 	}
