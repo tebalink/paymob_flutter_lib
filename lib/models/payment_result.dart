@@ -23,8 +23,8 @@ class PaymentResult {
   String? id;
 
   factory PaymentResult.fromJson(Map<String, dynamic> json) => PaymentResult(
-        payload: json["data_message"] ?? json["data_message"],
-        dataMessage: json["data_payload"] ?? json["data_payload"],
+        dataMessage: json["data_message"] ?? json["data_message"],
+        payload: json["data_payload"] ?? json["data_payload"],
         token: json["token"] ?? json["token"],
         maskedPan: json["masked_pan"] ?? json["masked_pan"],
         id: json["id"] ?? json["id"],

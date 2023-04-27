@@ -222,11 +222,7 @@ public class PaymobFlutterLibPlugin implements FlutterPlugin, MethodCallHandler,
           paymentResult.setDataMessage(extras.getString(PayResponseKeys.DATA_MESSAGE));
           paymentResult.setDataPayload(extras.getString(PayResponseKeys.payload));
 
-        try {
-          Log.d("payload",ResultConverter.toJsonString(paymentResult));
-        } catch (JsonProcessingException e) {
-          throw new RuntimeException(e);
-        }
+
         // Use the static keys declared in PayResponseKeys to extract the fields you want
 
           // Use the static keys declared in PayResponseKeys to extract the fields you want
