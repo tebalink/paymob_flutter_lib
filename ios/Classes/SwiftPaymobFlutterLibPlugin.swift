@@ -14,12 +14,15 @@ public class SwiftPaymobFlutterLibPlugin: NSObject, FlutterPlugin,AcceptSDKDeleg
         let token: String?
         let maskedPan: String?
         let id: String?
-        
+        let payload: String?
+
         enum CodingKeys: String, CodingKey {
             case dataMessage = "data_message"
             case token = "token"
             case maskedPan = "masked_pan"
             case id = "id"
+            case payload = "data_payload"
+
         }
     }
     struct Payment: Codable{
@@ -32,7 +35,7 @@ public class SwiftPaymobFlutterLibPlugin: NSObject, FlutterPlugin,AcceptSDKDeleg
         let token: String?
         let maskedPanNumber: String?
         let customer: Customer?
-        
+
         enum CodingKeys: String, CodingKey {
             case paymentKey = "payment_key"
             case saveCardDefault = "save_card_default"
@@ -57,7 +60,7 @@ public class SwiftPaymobFlutterLibPlugin: NSObject, FlutterPlugin,AcceptSDKDeleg
         let email: String?
         let phoneNumber: String?
         let postalCode: String?
-        
+
         enum CodingKeys: String, CodingKey {
             case firstName = "first_name"
             case lastName = "last_name"
@@ -72,7 +75,7 @@ public class SwiftPaymobFlutterLibPlugin: NSObject, FlutterPlugin,AcceptSDKDeleg
             case postalCode = "postal_code"
         }
     }
-    
+
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: "paymob_flutter_lib", binaryMessenger: registrar.messenger())
         let instance = SwiftPaymobFlutterLibPlugin()
@@ -107,7 +110,7 @@ public class SwiftPaymobFlutterLibPlugin: NSObject, FlutterPlugin,AcceptSDKDeleg
     private func startPayActivityNoToken(result: FlutterResult,payment: Payment) {
         do {
             let rootViewController:UIViewController! = UIApplication.shared.keyWindow?.rootViewController
-            
+
             let rootViewControllerr = UIApplication.shared.windows.filter({ (w) -> Bool in
                         return w.isHidden == false
              }).first?.rootViewController
@@ -120,31 +123,37 @@ public class SwiftPaymobFlutterLibPlugin: NSObject, FlutterPlugin,AcceptSDKDeleg
         }  catch let error {
             print(error.localizedDescription)
         }
-      
+
         // result("abcabc")
     }
     public func userDidCancel() {
         finishWithError(errorCode: "USER_CANCELED", errorMessage: "User canceled!!!", details: "");
     }
-    
+
     public func paymentAttemptFailed(_ error: AcceptSDKError, detailedDescription: String) {
         finishWithError(errorCode: "TRANSACTION_ERROR",errorMessage:  "Reason == " + error.localizedDescription,details:  detailedDescription);
 
     }
-    
+
     public func transactionRejected(_ payData: PayResponse) {
         finishWithError(errorCode: "TRANSACTION_REJECTED",errorMessage:  payData.dataMessage, details: "");
 
     }
-    
+
     public func transactionAccepted(_ payData: PayResponse) {
-        let paymentResult = try! JSONEncoder().encode(PaymentResult(dataMessage: payData.dataMessage,token: "", maskedPan: "",id : String(payData.id)))
+        let paymentResult = try! JSONEncoder().encode(PaymentResult(
+            dataMessage: payData.dataMessage,token: "", maskedPan: "",id : String(payData.id),
+            payload: String(data: payData, encoding: .utf8) ?? ""
+        ))
         let jsonString = String(data: paymentResult, encoding: .utf8) ?? ""
         finishWithSuccess(msg: jsonString)
     }
-    
+
     public func transactionAccepted(_ payData: PayResponse, savedCardData: SaveCardResponse) {
-        let paymentResult = try! JSONEncoder().encode(PaymentResult(dataMessage: payData.dataMessage,token: savedCardData.token, maskedPan: savedCardData.masked_pan,id : String(payData.id)))
+        let paymentResult = try! JSONEncoder().encode(PaymentResult(
+            dataMessage: payData.dataMessage,token: savedCardData.token, maskedPan: savedCardData.masked_pan,id : String(payData.id)
+            ,  payload: String(data: payData, encoding: .utf8) ?? "" ))
+
         let jsonString = String(data: paymentResult, encoding: .utf8) ?? ""
         finishWithSuccess(msg: jsonString)
     }
