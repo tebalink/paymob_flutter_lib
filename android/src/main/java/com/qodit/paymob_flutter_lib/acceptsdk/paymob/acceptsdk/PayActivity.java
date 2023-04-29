@@ -516,6 +516,8 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 		try {
 			putPayDataInIntent(rejectIntent);
 			setResult(IntentConstants.TRANSACTION_REJECTED, rejectIntent);
+
+ 			finish();
 		} catch (JSONException J) {
 			rejectIntent.putExtra(IntentConstants.RAW_PAY_RESPONSE, this.payDict.toString());
 			setResult(IntentConstants.TRANSACTION_REJECTED_PARSING_ISSUE, rejectIntent);
