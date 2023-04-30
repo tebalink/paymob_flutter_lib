@@ -254,7 +254,6 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 				PayActivity.this.dismissProgressDialog();
 				try {
 					JSONObject jsonResult = new JSONObject(response);
-					Log.d("notice211", "json output: " + jsonResult);
 					String direct3dSecure = jsonResult.getString("is_3d_secure");
 					if (!direct3dSecure.isEmpty()) {
 						PayActivity.this.payDict = jsonResult;
@@ -489,7 +488,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 		Intent errorIntent = new Intent();
 		try {
 			putPayDataInIntent(errorIntent);
-			errorIntent.putExtra("transaction_error_reason", reason);
+			errorIntent.putExtra(IntentConstants.TRANSACTION_ERROR_REASON, reason);
 			setResult(IntentConstants.TRANSACTION_ERROR, errorIntent);
 			finish();
 		} catch (JSONException jsonException) {

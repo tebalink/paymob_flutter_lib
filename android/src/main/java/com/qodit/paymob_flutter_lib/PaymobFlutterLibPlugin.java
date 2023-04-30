@@ -152,6 +152,7 @@ public class PaymobFlutterLibPlugin implements FlutterPlugin, MethodCallHandler,
       } catch (IOException e) {
         pendingResult.error("error", e.getMessage(), null);
       }
+
     } else if (call.method.equals("StartPayActivityToken")) {
       try {
         pendingResult = result;
