@@ -27,6 +27,15 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/small_padding_value"
+                android:layout_marginLeft="@dimen/small_padding_value"
+                android:layout_marginTop="40dp"
+                android:src="@drawable/tebalink_logo" />
+
             <LinearLayout
                 android:id="@+id/cardName_linearLayout"
                 android:layout_width="match_parent"
@@ -255,15 +264,6 @@
                 android:text="@string/pay_button"
                 android:textColor="#FFFFFF"
                 android:textSize="@dimen/large_text_size" />
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/small_padding_value"
-                android:layout_marginLeft="@dimen/small_padding_value"
-                android:src="@drawable/tebalink_logo"
-                android:layout_marginTop="40dp"/>
 
         </LinearLayout>
 
