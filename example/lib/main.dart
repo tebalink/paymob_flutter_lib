@@ -175,6 +175,7 @@ class _MyAppState extends State<MyApp> {
                 actionbar: true,
               ));
       if (!mounted) return;
+      print( "resultresultresult ${result?.getJson()} " );
 
       print("transID : ${result?.id}");
       print(result);
@@ -186,10 +187,11 @@ class _MyAppState extends State<MyApp> {
     } on PlatformException catch (err) {
       // Handle err
       print("PlatformException 1");
-      print(err);
+      print("PlatformException ##${err.details}");
+
       setState(() {
         _error = '${err.message}';
-      });
+       });
     } catch (e) {
       if (!mounted) return;
       setState(() {

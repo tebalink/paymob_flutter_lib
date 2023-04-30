@@ -545,6 +545,7 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 
 	private void putPayDataInIntent(Intent intent) throws JSONException {
 		intent.putExtra(PayResponseKeys.payload ,  this.payDict.toString());
+		Log.d("saaaaaaa", this.payDict.toString());
 
 		for (int i = 0; i < PayResponseKeys.PAY_DICT_KEYS.length; i++)
 			intent.putExtra(PayResponseKeys.PAY_DICT_KEYS[i], this.payDict.getString(PayResponseKeys.PAY_DICT_KEYS[i]));

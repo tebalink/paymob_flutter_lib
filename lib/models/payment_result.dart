@@ -29,4 +29,12 @@ class PaymentResult {
         maskedPan: json["masked_pan"] ?? json["masked_pan"],
         id: json["id"] ?? json["id"],
       );
+
+  Map<String, dynamic> getJson() => {
+        "data_message": dataMessage ,
+        "data_payload": payload  ,
+        "token": token  ,
+       "masked_pan": maskedPan ,
+        "id": id,
+      };
 }
