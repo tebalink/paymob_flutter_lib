@@ -18,7 +18,7 @@ class Order {
   String? deliveryNeeded;
   String? amountCents;
   String? currency;
-  int? merchantOrderId;
+  String? merchantOrderId;
   List<Item>? items;
   ShippingData? shippingData;
   ShippingDetails? shippingDetails;
