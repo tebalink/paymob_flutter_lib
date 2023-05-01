@@ -337,7 +337,8 @@ public class PaymobFlutterLibPlugin implements FlutterPlugin, MethodCallHandler,
 
                 // Note that a payment process was attempted. You can extract the original returned values
                 // Use the static keys declared in PayResponseKeys to extract the fields you want
-                finishWithError("USER_CANCELED_3D_SECURE_VERIFICATION", "User canceled 3-d scure verification!!", extras.getString(PayResponseKeys.PENDING));
+                finishWithError("USER_CANCELED_3D_SECURE_VERIFICATION",
+                        "User canceled 3-d scure verification!!", extras.getString(PayResponseKeys.PENDING));
             }
             else if (resultCode == IntentConstants.USER_CANCELED_3D_SECURE_VERIFICATION_PARSING_ISSUE) {
                 Bundle extras = data.getExtras();
