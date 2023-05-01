@@ -175,7 +175,6 @@ class _MyAppState extends State<MyApp> {
                 actionbar: true,
               ));
       if (!mounted) return;
-      print( "resultresultresult ${result?.getJson()} " );
 
       print("transID : ${result?.id}");
       print(result);
@@ -185,9 +184,6 @@ class _MyAppState extends State<MyApp> {
         _maskedPan = result?.maskedPan;
       });
     } on PlatformException catch (err) {
-      // Handle err
-      print("PlatformException 1");
-      print("PlatformException ##${err.details}");
 
       setState(() {
         _error = '${err.message}';
@@ -233,8 +229,6 @@ class _MyAppState extends State<MyApp> {
       });
 
     } catch (e) {
-      print("erorrrrrr 2");
-      print(e);
       if (!mounted) return;
       setState(() {
         _error = '$e';

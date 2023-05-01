@@ -494,8 +494,6 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 		} catch (JSONException jsonException) {
 			jsonException.printStackTrace();
 		}
-
-
 	}
 
 	private void notifyCancel3dSecure() {
@@ -553,15 +551,14 @@ public class PayActivity extends AppCompatActivity implements View.OnClickListen
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-		String raw_pay_responses = data.getStringExtra(IntentConstants.RAW_PAY_RESPONSE);
+//		String raw_pay_responses = data.getStringExtra(IntentConstants.RAW_PAY_RESPONSE);
 
-		Log.d("raw_pay_responses",raw_pay_responses);
 
 		if (requestCode == IntentConstants.THREE_D_SECURE_VERIFICATION_REQUEST)
 			if (resultCode == IntentConstants.MISSING_ARGUMENT) {
 				notifyCancel3dSecure();
 			} else if (resultCode == IntentConstants.USER_CANCELED) {
-				notifyCancel3dSecure();
+//				notifyCancel3dSecure();
 			} else if ( resultCode == IntentConstants.USER_FINISHED_3D_VERIFICATION ) {
 				String raw_pay_response = data.getStringExtra(IntentConstants.RAW_PAY_RESPONSE);
 				Log.d("onActivityResult",raw_pay_response);
