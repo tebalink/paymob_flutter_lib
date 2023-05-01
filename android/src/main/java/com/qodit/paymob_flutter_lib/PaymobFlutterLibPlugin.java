@@ -191,15 +191,6 @@ public class PaymobFlutterLibPlugin implements FlutterPlugin, MethodCallHandler,
     @RequiresApi(api = Build.VERSION_CODES.O)
     public boolean onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        Bundle extras = data.getExtras();
-        PaymentResult paymentResult = new PaymentResult();
-
-        paymentResult.setToken("");
-        paymentResult.setMaskedPan("");
-        paymentResult.setID(extras.getString(PayResponseKeys.ID));
-        paymentResult.setDataMessage(extras.getString(PayResponseKeys.DATA_MESSAGE));
-        paymentResult.setDataPayload(extras.getString(PayResponseKeys.payload));
-
 
         if (requestCode == ACCEPT_PAYMENT_REQUEST) {
 
@@ -215,6 +206,15 @@ public class PaymobFlutterLibPlugin implements FlutterPlugin, MethodCallHandler,
                         "Missing Argument == "  ,null);
             }
             else if (resultCode == IntentConstants.TRANSACTION_ERROR) {
+                Bundle extras = data.getExtras();
+                PaymentResult paymentResult = new PaymentResult();
+
+                paymentResult.setToken("");
+                paymentResult.setMaskedPan("");
+                paymentResult.setID(extras.getString(PayResponseKeys.ID));
+                paymentResult.setDataMessage(extras.getString(PayResponseKeys.DATA_MESSAGE));
+                paymentResult.setDataPayload(extras.getString(PayResponseKeys.payload));
+
 
                 // An error occurred while handling an API's response
                 finishWithError("TRANSACTION_ERROR 6",
@@ -223,6 +223,15 @@ public class PaymobFlutterLibPlugin implements FlutterPlugin, MethodCallHandler,
 
             }
             else if (resultCode == IntentConstants.TRANSACTION_REJECTED) {
+                Bundle extras = data.getExtras();
+                PaymentResult paymentResult = new PaymentResult();
+
+                paymentResult.setToken("");
+                paymentResult.setMaskedPan("");
+                paymentResult.setID(extras.getString(PayResponseKeys.ID));
+                paymentResult.setDataMessage(extras.getString(PayResponseKeys.DATA_MESSAGE));
+                paymentResult.setDataPayload(extras.getString(PayResponseKeys.payload));
+
 
                 // User attempted to pay but their transaction was rejected
 
@@ -232,6 +241,15 @@ public class PaymobFlutterLibPlugin implements FlutterPlugin, MethodCallHandler,
                         ResultConverter.toJsonString(paymentResult));
             }
             else if (resultCode == IntentConstants.TRANSACTION_REJECTED_PARSING_ISSUE) {
+                Bundle extras = data.getExtras();
+                PaymentResult paymentResult = new PaymentResult();
+
+                paymentResult.setToken("");
+                paymentResult.setMaskedPan("");
+                paymentResult.setID(extras.getString(PayResponseKeys.ID));
+                paymentResult.setDataMessage(extras.getString(PayResponseKeys.DATA_MESSAGE));
+                paymentResult.setDataPayload(extras.getString(PayResponseKeys.payload));
+
 
                 // User attempted to pay but their transaction was rejected. An error occured while reading the returned JSON
                 finishWithError("TRANSACTION_REJECTED_PARSING_ISSUE",
@@ -239,6 +257,15 @@ public class PaymobFlutterLibPlugin implements FlutterPlugin, MethodCallHandler,
                         ResultConverter.toJsonString(paymentResult));
             }
             else if (resultCode == IntentConstants.TRANSACTION_SUCCESSFUL) {
+                Bundle extras = data.getExtras();
+                PaymentResult paymentResult = new PaymentResult();
+
+                paymentResult.setToken("");
+                paymentResult.setMaskedPan("");
+                paymentResult.setID(extras.getString(PayResponseKeys.ID));
+                paymentResult.setDataMessage(extras.getString(PayResponseKeys.DATA_MESSAGE));
+                paymentResult.setDataPayload(extras.getString(PayResponseKeys.payload));
+
 
                 // User finished their payment successfullyTRANSACTION_SUCCESSFUL
 
@@ -256,11 +283,29 @@ public class PaymobFlutterLibPlugin implements FlutterPlugin, MethodCallHandler,
 
             }
             else if (resultCode == IntentConstants.TRANSACTION_SUCCESSFUL_PARSING_ISSUE) {
+                Bundle extras = data.getExtras();
+                PaymentResult paymentResult = new PaymentResult();
+
+                paymentResult.setToken("");
+                paymentResult.setMaskedPan("");
+                paymentResult.setID(extras.getString(PayResponseKeys.ID));
+                paymentResult.setDataMessage(extras.getString(PayResponseKeys.DATA_MESSAGE));
+                paymentResult.setDataPayload(extras.getString(PayResponseKeys.payload));
+
 
                 // User finished their payment successfully. An error occured while reading the returned JSON.
                 finishWithError("TRANSACTION_SUCCESSFUL_PARSING_ISSUE", "TRANSACTION_SUCCESSFUL - Parsing Issue", ResultConverter.toJsonString(paymentResult));
             }
             else if (resultCode == IntentConstants.TRANSACTION_SUCCESSFUL_CARD_SAVED) {
+                Bundle extras = data.getExtras();
+                PaymentResult paymentResult = new PaymentResult();
+
+                paymentResult.setToken("");
+                paymentResult.setMaskedPan("");
+                paymentResult.setID(extras.getString(PayResponseKeys.ID));
+                paymentResult.setDataMessage(extras.getString(PayResponseKeys.DATA_MESSAGE));
+                paymentResult.setDataPayload(extras.getString(PayResponseKeys.payload));
+
 
                 // User finished their payment successfully and card was TRANSACTION_SUCCESSFUL_CARD_SAVEDsaved.
                 // ToastMaker.displayLongToast(this, "data " + extras.getString(PayResponseKeys.DATA_MESSAGE));
@@ -280,12 +325,30 @@ public class PaymobFlutterLibPlugin implements FlutterPlugin, MethodCallHandler,
                 }
             }
             else if (resultCode == IntentConstants.USER_CANCELED_3D_SECURE_VERIFICATION) {
+                Bundle extras = data.getExtras();
+                PaymentResult paymentResult = new PaymentResult();
+
+                paymentResult.setToken("");
+                paymentResult.setMaskedPan("");
+                paymentResult.setID(extras.getString(PayResponseKeys.ID));
+                paymentResult.setDataMessage(extras.getString(PayResponseKeys.DATA_MESSAGE));
+                paymentResult.setDataPayload(extras.getString(PayResponseKeys.payload));
+
 
                 // Note that a payment process was attempted. You can extract the original returned values
                 // Use the static keys declared in PayResponseKeys to extract the fields you want
                 finishWithError("USER_CANCELED_3D_SECURE_VERIFICATION", "User canceled 3-d scure verification!!", extras.getString(PayResponseKeys.PENDING));
             }
             else if (resultCode == IntentConstants.USER_CANCELED_3D_SECURE_VERIFICATION_PARSING_ISSUE) {
+                Bundle extras = data.getExtras();
+                PaymentResult paymentResult = new PaymentResult();
+
+                paymentResult.setToken("");
+                paymentResult.setMaskedPan("");
+                paymentResult.setID(extras.getString(PayResponseKeys.ID));
+                paymentResult.setDataMessage(extras.getString(PayResponseKeys.DATA_MESSAGE));
+                paymentResult.setDataPayload(extras.getString(PayResponseKeys.payload));
+
 
                 // Note that a payment process was attempted.
                 // User finished their payment successfully. An error occured while reading the returned JSON.
