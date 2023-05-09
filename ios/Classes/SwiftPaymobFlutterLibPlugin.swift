@@ -137,13 +137,12 @@ public class SwiftPaymobFlutterLibPlugin: NSObject, FlutterPlugin,AcceptSDKDeleg
 
     public func transactionRejected(_ payData: PayResponse) {
         finishWithError(errorCode: "TRANSACTION_REJECTED",errorMessage:  payData.dataMessage, details: "");
-
     }
 
     public func transactionAccepted(_ payData: PayResponse) {
         let paymentResult = try! JSONEncoder().encode(PaymentResult(
             dataMessage: payData.dataMessage,token: "", maskedPan: "",id : String(payData.id),
-            payload: String(data: payData, encoding: .utf8) ?? ""
+            payload: String(data:  JSONEncoder().encode(payData) , encoding: .utf8) ?? ""
         ))
         let jsonString = String(data: paymentResult, encoding: .utf8) ?? ""
         finishWithSuccess(msg: jsonString)
@@ -151,8 +150,9 @@ public class SwiftPaymobFlutterLibPlugin: NSObject, FlutterPlugin,AcceptSDKDeleg
 
     public func transactionAccepted(_ payData: PayResponse, savedCardData: SaveCardResponse) {
         let paymentResult = try! JSONEncoder().encode(PaymentResult(
-            dataMessage: payData.dataMessage,token: savedCardData.token, maskedPan: savedCardData.masked_pan,id : String(payData.id)
-            ,  payload: String(data: payData, encoding: .utf8) ?? "" ))
+            dataMessage: payData.dataMessage,token: savedCardData.token,
+            maskedPan: savedCardData.masked_pan,id : String(payData.id)
+            ,  payload: String(data:  JSONEncoder().encode(payData) , encoding: .utf8) ?? "" ))
 
         let jsonString = String(data: paymentResult, encoding: .utf8) ?? ""
         finishWithSuccess(msg: jsonString)
