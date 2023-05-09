@@ -143,7 +143,7 @@ public class SwiftPaymobFlutterLibPlugin: NSObject, FlutterPlugin,AcceptSDKDeleg
     public func transactionAccepted(_ payData: PayResponse) {
         let paymentResult = try! JSONEncoder().encode(PaymentResult(
             dataMessage: payData.dataMessage,token: "", maskedPan: "",id : String(payData.id),
-            payload: String(data: payData.dataMessage, encoding: .utf8) ?? ""
+            payload:String(payData.dataMessage)
         ))
         let jsonString = String(data: paymentResult, encoding: .utf8) ?? ""
         finishWithSuccess(msg: jsonString)
@@ -152,8 +152,9 @@ public class SwiftPaymobFlutterLibPlugin: NSObject, FlutterPlugin,AcceptSDKDeleg
 
     public func transactionAccepted(_ payData: PayResponse, savedCardData: SaveCardResponse) {
         let paymentResult = try! JSONEncoder().encode(PaymentResult(
-            dataMessage: payData.dataMessage,token: savedCardData.token, maskedPan: savedCardData.masked_pan,id : String(payData.id)
-            ,  payload: String(data: payData.dataMessage, encoding: .utf8) ?? "" ))
+            dataMessage: payData.dataMessage,token: savedCardData.token,
+             maskedPan: savedCardData.masked_pan,id : String(payData.id)
+            ,  payload:String(payData.dataMessage) ))
 
         let jsonString = String(data: paymentResult, encoding: .utf8) ?? ""
         finishWithSuccess(msg: jsonString)
