@@ -149,6 +149,7 @@ public class SwiftPaymobFlutterLibPlugin: NSObject, FlutterPlugin,AcceptSDKDeleg
         finishWithSuccess(msg: jsonString)
     }
 
+
     public func transactionAccepted(_ payData: PayResponse, savedCardData: SaveCardResponse) {
         let paymentResult = try! JSONEncoder().encode(PaymentResult(
             dataMessage: payData.dataMessage,token: savedCardData.token, maskedPan: savedCardData.masked_pan,id : String(payData.id)
